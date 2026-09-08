@@ -1,0 +1,729 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		06C3996C57F7730506625049 /* UjingError.swift in Sources */ = {isa = PBXBuildFile; fileRef = D94FC818875CB28CBCE1A1E6 /* UjingError.swift */; };
+		08E823F3364FA0269F08D8C1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1FAE80E145DAA8FFAE25066A /* Assets.xcassets */; };
+		191484ED814845D66C18FDA3 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DED59E758A59301E4589B373 /* LoginView.swift */; };
+		1B2E905373B590320168FEFD /* CaptchaSignature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 732BFA6941C691E682BBCBC5 /* CaptchaSignature.swift */; };
+		1DAB66FAA7E195C1C7344B13 /* CaptchaSignature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 732BFA6941C691E682BBCBC5 /* CaptchaSignature.swift */; };
+		2D5E85E56F12CB011190EE4F /* StoreSelectionStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = F31AC2385AB2A19AACE2C795 /* StoreSelectionStore.swift */; };
+		2E04AAE8D0857A21F139AA01 /* LiteUWidget.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = B9BBF113F4E42BC4766588DE /* LiteUWidget.appex */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		33320BDBAF5E3D2FBA573DFF /* UjingError.swift in Sources */ = {isa = PBXBuildFile; fileRef = D94FC818875CB28CBCE1A1E6 /* UjingError.swift */; };
+		360A2672D495D4C1B2103291 /* AuthStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A0E2880BBA208924082FD64 /* AuthStore.swift */; };
+		371E32A3EEDA4CA19FFADDC3 /* WasherNotifyTiming.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EAC5C82E8942D20ACD1BAE3 /* WasherNotifyTiming.swift */; };
+		4A4BD932BA8F70E309ABFDF1 /* TokenKeychain.swift in Sources */ = {isa = PBXBuildFile; fileRef = A31FBCACD1C7C5D6667986B4 /* TokenKeychain.swift */; };
+		50EB408D972B3170FD037D4C /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8A8D1DEB0B7A2041719F4D3C /* WidgetKit.framework */; };
+		5FDDDBCF74E339EFA3B70C1B /* Models.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F1009EB22F9EB2F4DE463EC /* Models.swift */; };
+		62FE0EB343CF34887BF1A989 /* UjingClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E285915071DD51222536A27 /* UjingClient.swift */; };
+		6470E867D82542F2C3BA6DF8 /* StatusWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2363B9BF13CF134CA251DB45 /* StatusWidget.swift */; };
+		770EE42A281C6EF97B6F2737 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8A8D1DEB0B7A2041719F4D3C /* WidgetKit.framework */; };
+		7B160EB3EB8873C7B1820FB3 /* AppGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 043F573BAB9F76C56887C672 /* AppGroup.swift */; };
+		7F9B9B61915CA7250613F9F9 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = B48114A75FE411E7F87B594E /* PrivacyInfo.xcprivacy */; };
+		90CF3EDE1BF28099B3063052 /* LiteUTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1FD14FB31C4B60651B97037 /* LiteUTests.swift */; };
+		98BE8CB7CFEBD79CB649C68D /* WasherNotifyTiming.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EAC5C82E8942D20ACD1BAE3 /* WasherNotifyTiming.swift */; };
+		996CF8C9383E5C1822EC7B73 /* WidgetSnapshotStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CC099D0A6BED1B17CBF0104 /* WidgetSnapshotStore.swift */; };
+		A4C6063AC1204C6D6481BAFC /* StorePickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE709AA5EFDBFCA88F537A55 /* StorePickerView.swift */; };
+		AD49C242251F4F189C243A89 /* AppIntents.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A12F5FCCFFC74796BE55331 /* AppIntents.framework */; };
+		B0283FD67647729DF2354E53 /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA77C5CD974523B1FF07C67C /* RootView.swift */; };
+		B68919B794F82AC8E5DC8527 /* AppGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 043F573BAB9F76C56887C672 /* AppGroup.swift */; };
+		BC439980CBFCFFE05597605D /* StoreWidgetIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B0CFDE4C38FA62F2F140398 /* StoreWidgetIntent.swift */; };
+		BE087371BA9FE3B23DD43E3D /* TokenKeychain.swift in Sources */ = {isa = PBXBuildFile; fileRef = A31FBCACD1C7C5D6667986B4 /* TokenKeychain.swift */; };
+		C2C8D492F48D81199591E6DA /* Models.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F1009EB22F9EB2F4DE463EC /* Models.swift */; };
+		CB349F5ECF7CBCB918D97C33 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 743D591F534408952D855D8A /* SwiftUI.framework */; };
+		D2338B44FDDEE0FF30810FD5 /* UjingClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E285915071DD51222536A27 /* UjingClient.swift */; };
+		D79309A3BC278E58331BF020 /* WidgetSnapshotStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CC099D0A6BED1B17CBF0104 /* WidgetSnapshotStore.swift */; };
+		E343D1718EF45B1405FC83BC /* LiteUApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67933EB9D56C95E9CF9E3937 /* LiteUApp.swift */; };
+		E858B16F2C07A693C1AF0F3C /* StoreWidgetIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B0CFDE4C38FA62F2F140398 /* StoreWidgetIntent.swift */; };
+		EA3AA56CD179C03EF09258D1 /* AuthStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A0E2880BBA208924082FD64 /* AuthStore.swift */; };
+		ECDD0850EE576E9AA643C50F /* LocationProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C5956D3DA7E35D9570A84E1 /* LocationProvider.swift */; };
+		F3924B596AB48E8307ABD127 /* StoreSelectionStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = F31AC2385AB2A19AACE2C795 /* StoreSelectionStore.swift */; };
+		FA98688DF9C050CA2A9E8B14 /* WasherNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = A77D7B2B1BBBB56C611A5462 /* WasherNotification.swift */; };
+		FD83000D5E7D94B6992D34ED /* StatusView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC0C7F8B5EFE26FB74D52A4B /* StatusView.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		7A95E426FDB4E1C2A06F010D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 36DC803DEF56A4D9129AF80E /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 6D1403A6A64B9E3DDAB722E2;
+			remoteInfo = LiteUWidget;
+		};
+		E3B0C499F0E3EEAD27B20D2C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 36DC803DEF56A4D9129AF80E /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = BB311931319A77E2554C9AE7;
+			remoteInfo = LiteU;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		00D664BF806D08069DB1D423 /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				2E04AAE8D0857A21F139AA01 /* LiteUWidget.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		043F573BAB9F76C56887C672 /* AppGroup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppGroup.swift; sourceTree = "<group>"; };
+		1A12F5FCCFFC74796BE55331 /* AppIntents.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppIntents.framework; path = System/Library/Frameworks/AppIntents.framework; sourceTree = SDKROOT; };
+		1E285915071DD51222536A27 /* UjingClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UjingClient.swift; sourceTree = "<group>"; };
+		1FAE80E145DAA8FFAE25066A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		2363B9BF13CF134CA251DB45 /* StatusWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusWidget.swift; sourceTree = "<group>"; };
+		29D2E4AA10B0A0B9F7AD01A4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		47997A6A69F6BE76A8DE6F47 /* LiteU.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LiteU.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		47AAC8DFF9109F1FB51F4872 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		4B0CFDE4C38FA62F2F140398 /* StoreWidgetIntent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreWidgetIntent.swift; sourceTree = "<group>"; };
+		5B60EC89E787D930D13F40CC /* LiteUTests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = LiteUTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		67933EB9D56C95E9CF9E3937 /* LiteUApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiteUApp.swift; sourceTree = "<group>"; };
+		6EAC5C82E8942D20ACD1BAE3 /* WasherNotifyTiming.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WasherNotifyTiming.swift; sourceTree = "<group>"; };
+		732BFA6941C691E682BBCBC5 /* CaptchaSignature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaptchaSignature.swift; sourceTree = "<group>"; };
+		743D591F534408952D855D8A /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
+		76313A70857F5C3E6A960B7F /* LiteU.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = LiteU.entitlements; sourceTree = "<group>"; };
+		789ADC83610BE6617833A734 /* LiteUWidget.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = LiteUWidget.entitlements; sourceTree = "<group>"; };
+		7CC099D0A6BED1B17CBF0104 /* WidgetSnapshotStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetSnapshotStore.swift; sourceTree = "<group>"; };
+		8A0E2880BBA208924082FD64 /* AuthStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthStore.swift; sourceTree = "<group>"; };
+		8A8D1DEB0B7A2041719F4D3C /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
+		8F1009EB22F9EB2F4DE463EC /* Models.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Models.swift; sourceTree = "<group>"; };
+		9C5956D3DA7E35D9570A84E1 /* LocationProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationProvider.swift; sourceTree = "<group>"; };
+		A31FBCACD1C7C5D6667986B4 /* TokenKeychain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenKeychain.swift; sourceTree = "<group>"; };
+		A77D7B2B1BBBB56C611A5462 /* WasherNotification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WasherNotification.swift; sourceTree = "<group>"; };
+		B48114A75FE411E7F87B594E /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
+		B9BBF113F4E42BC4766588DE /* LiteUWidget.appex */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = "wrapper.app-extension"; path = LiteUWidget.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		D94FC818875CB28CBCE1A1E6 /* UjingError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UjingError.swift; sourceTree = "<group>"; };
+		DA77C5CD974523B1FF07C67C /* RootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
+		DE709AA5EFDBFCA88F537A55 /* StorePickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorePickerView.swift; sourceTree = "<group>"; };
+		DED59E758A59301E4589B373 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
+		EC0C7F8B5EFE26FB74D52A4B /* StatusView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusView.swift; sourceTree = "<group>"; };
+		F1FD14FB31C4B60651B97037 /* LiteUTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiteUTests.swift; sourceTree = "<group>"; };
+		F31AC2385AB2A19AACE2C795 /* StoreSelectionStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreSelectionStore.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		6034AB8B032C4C85ABB9898B /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				770EE42A281C6EF97B6F2737 /* WidgetKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		6080D785D8AD92EA75C78BA8 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				50EB408D972B3170FD037D4C /* WidgetKit.framework in Frameworks */,
+				CB349F5ECF7CBCB918D97C33 /* SwiftUI.framework in Frameworks */,
+				AD49C242251F4F189C243A89 /* AppIntents.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		72FF1EA6498AD85CCEBBCFE3 /* Sources */ = {
+			isa = PBXGroup;
+			children = (
+				FF40DE930D1877922739AA7C /* App */,
+				B9E2F16A1A0ADCF6DA757E08 /* Shared */,
+				9DB03F91E6AC07E9FB307647 /* Widget */,
+			);
+			path = Sources;
+			sourceTree = "<group>";
+		};
+		9DB03F91E6AC07E9FB307647 /* Widget */ = {
+			isa = PBXGroup;
+			children = (
+				47AAC8DFF9109F1FB51F4872 /* Info.plist */,
+				789ADC83610BE6617833A734 /* LiteUWidget.entitlements */,
+				2363B9BF13CF134CA251DB45 /* StatusWidget.swift */,
+			);
+			path = Widget;
+			sourceTree = "<group>";
+		};
+		A6976404396F1127667DF7EC = {
+			isa = PBXGroup;
+			children = (
+				72FF1EA6498AD85CCEBBCFE3 /* Sources */,
+				FC314D2A716DA9CA26B08D39 /* Tests */,
+				F9C868A62DC677949D9ED7B3 /* Frameworks */,
+				FA152AB299AB549FF1A73247 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		B9E2F16A1A0ADCF6DA757E08 /* Shared */ = {
+			isa = PBXGroup;
+			children = (
+				043F573BAB9F76C56887C672 /* AppGroup.swift */,
+				8A0E2880BBA208924082FD64 /* AuthStore.swift */,
+				732BFA6941C691E682BBCBC5 /* CaptchaSignature.swift */,
+				8F1009EB22F9EB2F4DE463EC /* Models.swift */,
+				F31AC2385AB2A19AACE2C795 /* StoreSelectionStore.swift */,
+				4B0CFDE4C38FA62F2F140398 /* StoreWidgetIntent.swift */,
+				A31FBCACD1C7C5D6667986B4 /* TokenKeychain.swift */,
+				1E285915071DD51222536A27 /* UjingClient.swift */,
+				D94FC818875CB28CBCE1A1E6 /* UjingError.swift */,
+				6EAC5C82E8942D20ACD1BAE3 /* WasherNotifyTiming.swift */,
+				7CC099D0A6BED1B17CBF0104 /* WidgetSnapshotStore.swift */,
+			);
+			path = Shared;
+			sourceTree = "<group>";
+		};
+		F9C868A62DC677949D9ED7B3 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				1A12F5FCCFFC74796BE55331 /* AppIntents.framework */,
+				743D591F534408952D855D8A /* SwiftUI.framework */,
+				8A8D1DEB0B7A2041719F4D3C /* WidgetKit.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		FA152AB299AB549FF1A73247 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				47997A6A69F6BE76A8DE6F47 /* LiteU.app */,
+				5B60EC89E787D930D13F40CC /* LiteUTests.xctest */,
+				B9BBF113F4E42BC4766588DE /* LiteUWidget.appex */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		FC314D2A716DA9CA26B08D39 /* Tests */ = {
+			isa = PBXGroup;
+			children = (
+				F1FD14FB31C4B60651B97037 /* LiteUTests.swift */,
+			);
+			path = Tests;
+			sourceTree = "<group>";
+		};
+		FF40DE930D1877922739AA7C /* App */ = {
+			isa = PBXGroup;
+			children = (
+				1FAE80E145DAA8FFAE25066A /* Assets.xcassets */,
+				29D2E4AA10B0A0B9F7AD01A4 /* Info.plist */,
+				76313A70857F5C3E6A960B7F /* LiteU.entitlements */,
+				67933EB9D56C95E9CF9E3937 /* LiteUApp.swift */,
+				9C5956D3DA7E35D9570A84E1 /* LocationProvider.swift */,
+				DED59E758A59301E4589B373 /* LoginView.swift */,
+				B48114A75FE411E7F87B594E /* PrivacyInfo.xcprivacy */,
+				DA77C5CD974523B1FF07C67C /* RootView.swift */,
+				EC0C7F8B5EFE26FB74D52A4B /* StatusView.swift */,
+				DE709AA5EFDBFCA88F537A55 /* StorePickerView.swift */,
+				A77D7B2B1BBBB56C611A5462 /* WasherNotification.swift */,
+			);
+			path = App;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		271B003DD5E4AA8B2641E0A1 /* LiteUTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = EBCE6ED658530190471565F6 /* Build configuration list for PBXNativeTarget "LiteUTests" */;
+			buildPhases = (
+				12C9A4714281362BC3D6BBEE /* Sources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				3C823B629BF8A8625EE75E71 /* PBXTargetDependency */,
+			);
+			name = LiteUTests;
+			packageProductDependencies = (
+			);
+			productName = LiteUTests;
+			productReference = 5B60EC89E787D930D13F40CC /* LiteUTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		6D1403A6A64B9E3DDAB722E2 /* LiteUWidget */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 314E140FF490B38E197952C2 /* Build configuration list for PBXNativeTarget "LiteUWidget" */;
+			buildPhases = (
+				ADD68799A8135559D19966A0 /* Sources */,
+				6080D785D8AD92EA75C78BA8 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = LiteUWidget;
+			packageProductDependencies = (
+			);
+			productName = LiteUWidget;
+			productReference = B9BBF113F4E42BC4766588DE /* LiteUWidget.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
+		BB311931319A77E2554C9AE7 /* LiteU */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 8B3A53058833CD585C59A232 /* Build configuration list for PBXNativeTarget "LiteU" */;
+			buildPhases = (
+				579FD31CFFDB53B94DD51F73 /* Copy captcha HMAC key */,
+				FA3525EA21F87530BEC6D553 /* Sources */,
+				014C5206F28AA41BCF3CE917 /* Resources */,
+				6034AB8B032C4C85ABB9898B /* Frameworks */,
+				00D664BF806D08069DB1D423 /* Embed Foundation Extensions */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				7701DF66F1B5EF75223B7973 /* PBXTargetDependency */,
+			);
+			name = LiteU;
+			packageProductDependencies = (
+			);
+			productName = LiteU;
+			productReference = 47997A6A69F6BE76A8DE6F47 /* LiteU.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		36DC803DEF56A4D9129AF80E /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = YES;
+				LastUpgradeCheck = 1430;
+				TargetAttributes = {
+					271B003DD5E4AA8B2641E0A1 = {
+						DevelopmentTeam = UD7BN8R7P2;
+						ProvisioningStyle = Automatic;
+					};
+					6D1403A6A64B9E3DDAB722E2 = {
+						DevelopmentTeam = UD7BN8R7P2;
+						ProvisioningStyle = Automatic;
+					};
+					BB311931319A77E2554C9AE7 = {
+						DevelopmentTeam = UD7BN8R7P2;
+						ProvisioningStyle = Automatic;
+					};
+				};
+			};
+			buildConfigurationList = 64C6231740245283FF774E5E /* Build configuration list for PBXProject "LiteU" */;
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				Base,
+				en,
+			);
+			mainGroup = A6976404396F1127667DF7EC;
+			minimizedProjectReferenceProxies = 1;
+			preferredProjectObjectVersion = 77;
+			productRefGroup = FA152AB299AB549FF1A73247 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				BB311931319A77E2554C9AE7 /* LiteU */,
+				6D1403A6A64B9E3DDAB722E2 /* LiteUWidget */,
+				271B003DD5E4AA8B2641E0A1 /* LiteUTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		014C5206F28AA41BCF3CE917 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				08E823F3364FA0269F08D8C1 /* Assets.xcassets in Resources */,
+				7F9B9B61915CA7250613F9F9 /* PrivacyInfo.xcprivacy in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		579FD31CFFDB53B94DD51F73 /* Copy captcha HMAC key */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"$(SRCROOT)/Secrets/captcha-hmac-key.txt",
+			);
+			name = "Copy captcha HMAC key";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(TARGET_BUILD_DIR)/$(UNLOCALIZED_RESOURCES_FOLDER_PATH)/captcha-hmac-key.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "set -euo pipefail\nSRC=\"${SRCROOT}/Secrets/captcha-hmac-key.txt\"\nDST=\"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/captcha-hmac-key.txt\"\nif [ ! -f \"$SRC\" ]; then\n  echo \"error: 缺少 Secrets/captcha-hmac-key.txt\" >&2\n  exit 1\nfi\nmkdir -p \"$(dirname \"$DST\")\"\ncp \"$SRC\" \"$DST\"\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		12C9A4714281362BC3D6BBEE /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				90CF3EDE1BF28099B3063052 /* LiteUTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		ADD68799A8135559D19966A0 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B68919B794F82AC8E5DC8527 /* AppGroup.swift in Sources */,
+				EA3AA56CD179C03EF09258D1 /* AuthStore.swift in Sources */,
+				1B2E905373B590320168FEFD /* CaptchaSignature.swift in Sources */,
+				C2C8D492F48D81199591E6DA /* Models.swift in Sources */,
+				6470E867D82542F2C3BA6DF8 /* StatusWidget.swift in Sources */,
+				F3924B596AB48E8307ABD127 /* StoreSelectionStore.swift in Sources */,
+				E858B16F2C07A693C1AF0F3C /* StoreWidgetIntent.swift in Sources */,
+				4A4BD932BA8F70E309ABFDF1 /* TokenKeychain.swift in Sources */,
+				62FE0EB343CF34887BF1A989 /* UjingClient.swift in Sources */,
+				06C3996C57F7730506625049 /* UjingError.swift in Sources */,
+				98BE8CB7CFEBD79CB649C68D /* WasherNotifyTiming.swift in Sources */,
+				D79309A3BC278E58331BF020 /* WidgetSnapshotStore.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		FA3525EA21F87530BEC6D553 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7B160EB3EB8873C7B1820FB3 /* AppGroup.swift in Sources */,
+				360A2672D495D4C1B2103291 /* AuthStore.swift in Sources */,
+				1DAB66FAA7E195C1C7344B13 /* CaptchaSignature.swift in Sources */,
+				E343D1718EF45B1405FC83BC /* LiteUApp.swift in Sources */,
+				ECDD0850EE576E9AA643C50F /* LocationProvider.swift in Sources */,
+				191484ED814845D66C18FDA3 /* LoginView.swift in Sources */,
+				5FDDDBCF74E339EFA3B70C1B /* Models.swift in Sources */,
+				B0283FD67647729DF2354E53 /* RootView.swift in Sources */,
+				FD83000D5E7D94B6992D34ED /* StatusView.swift in Sources */,
+				A4C6063AC1204C6D6481BAFC /* StorePickerView.swift in Sources */,
+				2D5E85E56F12CB011190EE4F /* StoreSelectionStore.swift in Sources */,
+				BC439980CBFCFFE05597605D /* StoreWidgetIntent.swift in Sources */,
+				BE087371BA9FE3B23DD43E3D /* TokenKeychain.swift in Sources */,
+				D2338B44FDDEE0FF30810FD5 /* UjingClient.swift in Sources */,
+				33320BDBAF5E3D2FBA573DFF /* UjingError.swift in Sources */,
+				FA98688DF9C050CA2A9E8B14 /* WasherNotification.swift in Sources */,
+				371E32A3EEDA4CA19FFADDC3 /* WasherNotifyTiming.swift in Sources */,
+				996CF8C9383E5C1822EC7B73 /* WidgetSnapshotStore.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		3C823B629BF8A8625EE75E71 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = BB311931319A77E2554C9AE7 /* LiteU */;
+			targetProxy = E3B0C499F0E3EEAD27B20D2C /* PBXContainerItemProxy */;
+		};
+		7701DF66F1B5EF75223B7973 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 6D1403A6A64B9E3DDAB722E2 /* LiteUWidget */;
+			targetProxy = 7A95E426FDB4E1C2A06F010D /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		49DE273642E6C44617AB595D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = Sources/App/LiteU.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Sources/App/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = LiteU;
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "用于查找附近洗衣房";
+				INFOPLIST_KEY_UIRequiresFullScreen = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.liteu.app;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		76D5EBE2CFD74A83488A2E1B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_STYLE = Automatic;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = UD7BN8R7P2;
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MARKETING_VERSION = 1.0.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_STRICT_CONCURRENCY = complete;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Release;
+		};
+		9B231398D5E4CBA14BD73456 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.liteu.app.tests;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/LiteU.app/LiteU";
+			};
+			name = Release;
+		};
+		A9B5766162A9C534E56C3741 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_STYLE = Automatic;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = UD7BN8R7P2;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"DEBUG=1",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MARKETING_VERSION = 1.0.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_STRICT_CONCURRENCY = complete;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Debug;
+		};
+		B456D65832C454AF01C9E3E6 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = Sources/Widget/LiteUWidget.entitlements;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Sources/Widget/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.liteu.app.widget;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		D80D00DEE007F226954B59C6 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.liteu.app.tests;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/LiteU.app/LiteU";
+			};
+			name = Debug;
+		};
+		F460B3F419B22D166722FB08 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = Sources/App/LiteU.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Sources/App/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = LiteU;
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "用于查找附近洗衣房";
+				INFOPLIST_KEY_UIRequiresFullScreen = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.liteu.app;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		F81266D7FD0C96C379245EF7 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = Sources/Widget/LiteUWidget.entitlements;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Sources/Widget/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.liteu.app.widget;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		314E140FF490B38E197952C2 /* Build configuration list for PBXNativeTarget "LiteUWidget" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F81266D7FD0C96C379245EF7 /* Debug */,
+				B456D65832C454AF01C9E3E6 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		64C6231740245283FF774E5E /* Build configuration list for PBXProject "LiteU" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A9B5766162A9C534E56C3741 /* Debug */,
+				76D5EBE2CFD74A83488A2E1B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		8B3A53058833CD585C59A232 /* Build configuration list for PBXNativeTarget "LiteU" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				49DE273642E6C44617AB595D /* Debug */,
+				F460B3F419B22D166722FB08 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		EBCE6ED658530190471565F6 /* Build configuration list for PBXNativeTarget "LiteUTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D80D00DEE007F226954B59C6 /* Debug */,
+				9B231398D5E4CBA14BD73456 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 36DC803DEF56A4D9129AF80E /* Project object */;
+}

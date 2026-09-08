@@ -1,0 +1,128 @@
+name: LiteU
+options:
+  createIntermediateGroups: true
+  groupSortPosition: top
+  deploymentTarget:
+    iOS: "17.0"
+settings:
+  base:
+    IPHONEOS_DEPLOYMENT_TARGET: "17.0"
+    SWIFT_VERSION: "5.0"
+    SWIFT_STRICT_CONCURRENCY: complete
+    TARGETED_DEVICE_FAMILY: "1,2"
+    CURRENT_PROJECT_VERSION: 1
+    MARKETING_VERSION: "1.0.0"
+    CODE_SIGN_STYLE: Automatic
+    ENABLE_USER_SCRIPT_SANDBOXING: YES
+    DEVELOPMENT_TEAM: UD7BN8R7P2
+targets:
+  LiteU:
+    type: application
+    platform: iOS
+    sources:
+      - path: Sources/Shared
+      - path: Sources/App
+    resources:
+      - path: Sources/App/Assets.xcassets
+      - path: Sources/App/PrivacyInfo.xcprivacy
+    preBuildScripts:
+      - name: Copy captcha HMAC key
+        basedOnDependencyAnalysis: false
+        inputFiles:
+          - $(SRCROOT)/Secrets/captcha-hmac-key.txt
+        outputFiles:
+          - $(TARGET_BUILD_DIR)/$(UNLOCALIZED_RESOURCES_FOLDER_PATH)/captcha-hmac-key.txt
+        script: |
+          set -euo pipefail
+          SRC="${SRCROOT}/Secrets/captcha-hmac-key.txt"
+          DST="${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/captcha-hmac-key.txt"
+          if [ ! -f "$SRC" ]; then
+            echo "error: 缺少 Secrets/captcha-hmac-key.txt" >&2
+            exit 1
+          fi
+          mkdir -p "$(dirname "$DST")"
+          cp "$SRC" "$DST"
+    info:
+      path: Sources/App/Info.plist
+      properties:
+        CFBundleDisplayName: LiteU
+        UILaunchScreen: {}
+        UIRequiresFullScreen: YES
+        UISupportedInterfaceOrientations:
+          - UIInterfaceOrientationPortrait
+        NSLocationWhenInUseUsageDescription: 用于查找附近洗衣房
+        CFBundleURLTypes:
+          - CFBundleURLName: com.liteu.app
+            CFBundleURLSchemes:
+              - liteu
+    entitlements:
+      path: Sources/App/LiteU.entitlements
+      properties:
+        com.apple.security.application-groups:
+          - group.com.liteu.shared
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.liteu.app
+        INFOPLIST_KEY_CFBundleDisplayName: LiteU
+        GENERATE_INFOPLIST_FILE: YES
+        ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
+        CODE_SIGN_ENTITLEMENTS: Sources/App/LiteU.entitlements
+        CODE_SIGN_IDENTITY: iPhone Developer
+    dependencies:
+      - target: LiteUWidget
+        embed: true
+        codeSign: true
+      - sdk: WidgetKit.framework
+  LiteUWidget:
+    type: app-extension
+    platform: iOS
+    sources:
+      - path: Sources/Shared
+      - path: Sources/Widget
+    entitlements:
+      path: Sources/Widget/LiteUWidget.entitlements
+      properties:
+        com.apple.security.application-groups:
+          - group.com.liteu.shared
+    info:
+      path: Sources/Widget/Info.plist
+      properties:
+        CFBundleDisplayName: LiteU
+        NSExtension:
+          NSExtensionPointIdentifier: com.apple.widgetkit-extension
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.liteu.app.widget
+        GENERATE_INFOPLIST_FILE: YES
+        CODE_SIGN_ENTITLEMENTS: Sources/Widget/LiteUWidget.entitlements
+        LD_RUNPATH_SEARCH_PATHS:
+          - $(inherited)
+          - "@executable_path/Frameworks"
+          - "@executable_path/../../Frameworks"
+    dependencies:
+      - sdk: WidgetKit.framework
+      - sdk: SwiftUI.framework
+      - sdk: AppIntents.framework
+  LiteUTests:
+    type: bundle.unit-test
+    platform: iOS
+    sources:
+      - path: Tests
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.liteu.app.tests
+        GENERATE_INFOPLIST_FILE: YES
+        TEST_HOST: "$(BUILT_PRODUCTS_DIR)/LiteU.app/LiteU"
+        BUNDLE_LOADER: "$(TEST_HOST)"
+    dependencies:
+      - target: LiteU
+schemes:
+  LiteU:
+    build:
+      targets:
+        LiteU: all
+        LiteUWidget: all
+        LiteUTests: [test]
+    test:
+      targets:
+        - LiteUTests

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 1024 1024">
+  <path
+    d="M 240 240
+       V 528
+       C 240 678 362 800 512 800
+       C 662 800 784 678 784 528
+       V 240
+       H 624
+       V 528
+       C 624 590 574 640 512 640
+       C 450 640 400 590 400 528
+       V 240
+       Z"
+    fill="#0F2A28"/>
+</svg>
