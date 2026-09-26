@@ -44,8 +44,8 @@ private struct SettingsView: View {
 
     var body: some View {
         List {
-            Section {
-                LabeledContent("登录状态", value: "已登录")
+            Section("账号") {
+                LabeledContent("手机号", value: auth.mobile.map { "\($0.prefix(3))****\($0.suffix(4))" } ?? "重新登录后显示")
             }
             Section {
                 Button("退出登录", role: .destructive) {
