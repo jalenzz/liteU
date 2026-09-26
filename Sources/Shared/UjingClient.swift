@@ -245,7 +245,7 @@ struct UjingTransport: Sendable {
         let response: URLResponse
         do {
             (data, response) = try await session.data(for: request)
-        } catch is CancellationError {
+        } catch is CancellationError, URLError.cancelled {
             throw CancellationError()
         } catch {
             throw UjingError.transport(error.localizedDescription)
