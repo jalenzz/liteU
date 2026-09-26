@@ -4,11 +4,12 @@ import WidgetKit
 struct StatusView: View {
     @Environment(AuthStore.self) private var auth
     @Environment(StoreSelectionStore.self) private var selection
+    @Environment(OrderStore.self) private var orderStore
     @Environment(\.ujingClient) private var client
+    @AppStorage(AppSettings.showDryers) private var showDryers = true
+    @AppStorage(AppSettings.showShoeWashers) private var showShoeWashers = true
 
     @State private var statuses: [StoreStatus] = []
-    @State private var orders: [RunningOrder] = []
-    @State private var reminderError: String?
     @State private var updatedAt: Date?
     @State private var isLoading = false
     @State private var errorMessage: String?
@@ -22,24 +23,13 @@ struct StatusView: View {
                 ProgressView("正在查询…")
             } else {
                 List {
-                    if !orders.isEmpty {
-                        Section {
-                            ForEach(orders) { order in
-                                RunningOrderRow(order: order)
-                            }
-                        } header: {
-                            Text("使用中")
-                        } footer: {
-                            Text(reminderError ?? "结束前 1 分钟会发通知提醒")
-                        }
-                    }
                     ForEach(statuses) { store in
                         Section(store.name) {
                             if !store.found {
                                 Text("这次附近结果里没有这家店")
                                     .foregroundStyle(.secondary)
                             }
-                            ForEach(store.kinds) { kind in
+                            ForEach(store.kinds.filter { isVisible($0.kind) }) { kind in
                                 let key = WasherNotification.key(storeID: store.id, kind: kind.kind)
                                 KindStatusRow(kind: kind, isArmed: notifyKeys.contains(key)) {
                                     await toggleNotify(store: store, kind: kind)
@@ -89,11 +79,19 @@ struct StatusView: View {
         }
     }
 
+    private func isVisible(_ kind: MachineKind) -> Bool {
+        switch kind {
+        case .washer: true
+        case .dryer: showDryers
+        case .shoe: showShoeWashers
+        }
+    }
+
     private func load() async {
         let token = auth.token!
         isLoading = true
         defer { isLoading = false }
-        async let running: Void = loadOrders(token: token)
+        async let running: Void = refreshRunning(token: token)
         await loadStatuses(token: token)
         await running
     }
@@ -113,33 +111,15 @@ struct StatusView: View {
             WidgetSnapshotStore.save(LaundryMapping.snapshot(from: result, updatedAt: now))
             WidgetCenter.shared.reloadAllTimelines()
         } catch {
-            handle(error)
+            errorMessage = auth.message(for: error)
         }
     }
 
-    private func loadOrders(token: String) async {
+    private func refreshRunning(token: String) async {
         do {
-            orders = try await client.runningOrders(token)
+            try await orderStore.refreshRunning(client: client, token: token)
         } catch {
-            handle(error)
-            return
-        }
-        do {
-            try await OrderReminder.sync(orders)
-            reminderError = nil
-        } catch {
-            reminderError = error.localizedDescription
-        }
-    }
-
-    private func handle(_ error: Error) {
-        switch error {
-        case is CancellationError:
-            return
-        case let error as UjingError where error.isUnauthorized:
-            auth.clear()
-        default:
-            errorMessage = error.localizedDescription
+            errorMessage = auth.message(for: error)
         }
     }
 
@@ -158,33 +138,6 @@ struct StatusView: View {
         } catch {
             notifyMessage = error.localizedDescription
         }
-    }
-}
-
-private struct RunningOrderRow: View {
-    var order: RunningOrder
-
-    var body: some View {
-        HStack(alignment: .center) {
-            VStack(alignment: .leading, spacing: 4) {
-                Text(order.machineName)
-                    .font(.headline)
-                Text([order.storeName, order.statusText].filter { !$0.isEmpty }.joined(separator: " · "))
-                    .font(.footnote)
-                    .foregroundStyle(.secondary)
-            }
-            Spacer(minLength: 8)
-            if let endsAt = order.endsAt {
-                VStack(alignment: .trailing, spacing: 2) {
-                    Text(timerInterval: Date.now...max(endsAt, .now), countsDown: true)
-                        .font(.title3.weight(.semibold).monospacedDigit())
-                    Text("\(endsAt.formatted(date: .omitted, time: .shortened)) 结束")
-                        .font(.caption)
-                        .foregroundStyle(.secondary)
-                }
-            }
-        }
-        .padding(.vertical, 4)
     }
 }
 

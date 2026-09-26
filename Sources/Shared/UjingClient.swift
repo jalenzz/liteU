@@ -12,7 +12,8 @@ struct UjingClient: Sendable {
     var login: @Sendable (_ mobile: String, _ captcha: String) async throws -> String
     var nearbyStores: @Sendable (_ lat: Double, _ lont: Double, _ token: String) async throws -> [NearbyStore]
     var machines: @Sendable (_ storeId: String, _ token: String) async throws -> [MachineType]
-    var runningOrders: @Sendable (_ token: String) async throws -> [RunningOrder]
+    var runningOrders: @Sendable (_ token: String) async throws -> [Order]
+    var historyOrders: @Sendable (_ page: Int, _ size: Int, _ token: String) async throws -> [Order]
 }
 
 extension UjingClient {
@@ -115,28 +116,40 @@ extension UjingClient {
                 return machines
             },
             runningOrders: { token in
-                let running: RunningOrdersData = try await transport.get(
+                let running: [OrderDTO] = try await transport.get(
                     path: "api/v1/orders/running",
                     query: [],
                     headers: UjingTransport.queryHeaders(token: token)
                 )
-                return try await withThrowingTaskGroup(of: (Int, RunningOrder).self) { group in
-                    for (index, orderId) in running.orderIds.enumerated() {
+                return try await withThrowingTaskGroup(of: (Int, Order).self) { group in
+                    for (index, item) in running.enumerated() {
                         group.addTask {
-                            let detail: OrderDetailDTO = try await transport.get(
-                                path: "api/v1/orders/\(orderId)/detail",
+                            let detail: OrderDTO = try await transport.get(
+                                path: "api/v1/orders/\(item.orderId)/detail",
                                 query: [],
                                 headers: UjingTransport.queryHeaders(token: token)
                             )
-                            return (index, LaundryMapping.runningOrder(detail, now: Date()))
+                            return (index, LaundryMapping.order(detail, now: Date()))
                         }
                     }
-                    var pairs: [(Int, RunningOrder)] = []
+                    var pairs: [(Int, Order)] = []
                     for try await pair in group {
                         pairs.append(pair)
                     }
                     return pairs.sorted { $0.0 < $1.0 }.map(\.1)
                 }
+            },
+            historyOrders: { page, size, token in
+                let items: [OrderDTO] = try await transport.get(
+                    path: "api/v1/orders/history",
+                    query: [
+                        URLQueryItem(name: "page", value: String(page)),
+                        URLQueryItem(name: "size", value: String(size)),
+                    ],
+                    headers: UjingTransport.queryHeaders(token: token)
+                )
+                let now = Date()
+                return items.map { LaundryMapping.order($0, now: now) }
             }
         )
     }
@@ -155,11 +168,7 @@ actor WaitCache {
     }
 }
 
-protocol EmptyDecodable: Decodable {
-    init()
-}
-
-struct EmptyData: EmptyDecodable {}
+struct EmptyData: Decodable {}
 
 struct LoginData: Decodable {
     var token: String
@@ -188,49 +197,6 @@ struct NearStoreDTO: Decodable {
 
 struct ReserveData: Decodable {
     var devices: [ReserveDeviceDTO]
-}
-
-/// `data` 为订单数组，或包着订单数组的对象（键名不固定）。
-struct RunningOrdersData: EmptyDecodable {
-    var orderIds: [String] = []
-
-    init() {}
-
-    init(from decoder: Decoder) throws {
-        if let items = try? [OrderRefDTO](from: decoder) {
-            orderIds = items.map(\.orderId)
-            return
-        }
-        let container = try decoder.container(keyedBy: AnyKey.self)
-        let items = container.allKeys.lazy.compactMap { try? container.decode([OrderRefDTO].self, forKey: $0) }.first
-        orderIds = (items ?? []).map(\.orderId)
-    }
-}
-
-struct OrderRefDTO: Decodable {
-    var orderId: String
-
-    enum CodingKeys: String, CodingKey {
-        case orderId, id
-    }
-
-    init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        orderId = try FlexibleID.decode(container, forKey: container.contains(.orderId) ? .orderId : .id)
-    }
-}
-
-struct AnyKey: CodingKey {
-    var stringValue: String
-    var intValue: Int? { nil }
-
-    init(stringValue: String) {
-        self.stringValue = stringValue
-    }
-
-    init?(intValue: Int) {
-        nil
-    }
 }
 
 struct UjingTransport: Sendable {
@@ -301,13 +267,13 @@ struct UjingTransport: Sendable {
                 message: envelope.msg ?? envelope.message ?? "请求失败"
             )
         }
-        if let value = envelope.data {
-            return value
+        if T.self == EmptyData.self {
+            return EmptyData() as! T
         }
-        if let empty = T.self as? EmptyDecodable.Type {
-            return empty.init() as! T
+        guard let value = envelope.data else {
+            throw UjingError.api(code: envelope.code, message: "响应缺少 data")
         }
-        throw UjingError.api(code: envelope.code, message: "响应缺少 data")
+        return value
     }
 }
 
@@ -383,18 +349,22 @@ extension ReserveDeviceFields: Decodable {
     }
 }
 
-extension OrderDetailDTO: Decodable {
+extension OrderDTO: Decodable {
     enum CodingKeys: String, CodingKey {
-        case orderId, statusRemark, remainTime, deviceTypeName, storeName
+        case orderId, deviceTypeId, deviceTypeName, deviceNo, storeName, status, isPauseStatus, createAt, remainTime
     }
 
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         orderId = try FlexibleID.decode(container, forKey: .orderId)
-        statusRemark = try container.decodeIfPresent(String.self, forKey: .statusRemark) ?? ""
-        remainTime = JSONNumber.int(container, forKey: .remainTime)
+        deviceTypeId = JSONNumber.int(container, forKey: .deviceTypeId)
         deviceTypeName = try container.decodeIfPresent(String.self, forKey: .deviceTypeName) ?? ""
+        deviceNo = (try? FlexibleID.decode(container, forKey: .deviceNo)) ?? ""
         storeName = try container.decodeIfPresent(String.self, forKey: .storeName) ?? ""
+        status = JSONNumber.int(container, forKey: .status)
+        isPaused = (try? container.decode(Bool.self, forKey: .isPauseStatus)) ?? (JSONNumber.int(container, forKey: .isPauseStatus) != 0)
+        createAt = try container.decodeIfPresent(String.self, forKey: .createAt) ?? ""
+        remainTime = JSONNumber.int(container, forKey: .remainTime)
     }
 }
 

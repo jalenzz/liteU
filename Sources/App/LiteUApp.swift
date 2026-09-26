@@ -5,6 +5,7 @@ import UserNotifications
 struct LiteUApp: App {
     @State private var auth = AuthStore()
     @State private var selection = StoreSelectionStore()
+    @State private var orderStore = OrderStore()
 
     init() {
         UNUserNotificationCenter.current().delegate = WasherNotification.presenter
@@ -15,6 +16,7 @@ struct LiteUApp: App {
             RootView()
                 .environment(auth)
                 .environment(selection)
+                .environment(orderStore)
                 .environment(\.ujingClient, .live())
         }
     }

@@ -94,22 +94,47 @@ struct LaundryMappingTests {
         ]) == 8)
     }
 
+    private static func dto(status: Int, isPaused: Bool = false, remainTime: Int = 1550) -> OrderDTO {
+        OrderDTO(
+            orderId: "9",
+            deviceTypeId: 3,
+            deviceTypeName: "",
+            deviceNo: "12",
+            storeName: "3舍",
+            status: status,
+            isPaused: isPaused,
+            createAt: "2026-09-22T10:05:51Z",
+            remainTime: remainTime
+        )
+    }
+
     @Test func runningOrderEndsAfterRemainSeconds() {
         let now = Date(timeIntervalSince1970: 1_000)
-        let order = LaundryMapping.runningOrder(
-            OrderDetailDTO(orderId: "9", statusRemark: "运行中", remainTime: 1550, deviceTypeName: "", storeName: "3舍"),
-            now: now
-        )
-        #expect(order.machineName == "使用中的机器")
+        let order = LaundryMapping.order(Self.dto(status: 40), now: now)
+        #expect(order.title == "12号烘干机")
+        #expect(order.statusText == "运行中")
+        #expect(order.createdAt == Date(timeIntervalSince1970: 1_790_071_551))
         #expect(order.endsAt == now.addingTimeInterval(1550))
     }
 
-    @Test func runningOrderWithoutRemainHasNoEnd() {
-        let order = LaundryMapping.runningOrder(
-            OrderDetailDTO(orderId: "9", statusRemark: "启动中", remainTime: 0, deviceTypeName: "烘干机", storeName: ""),
-            now: .now
-        )
+    @Test(arguments: [
+        (21, false, "启动中"),
+        (40, true, "机器暂停中"),
+        (50, false, "订单完成"),
+        (99, false, "状态 99"),
+    ])
+    func orderWithoutCountdown(_ status: Int, _ isPaused: Bool, _ text: String) {
+        let order = LaundryMapping.order(Self.dto(status: status, isPaused: isPaused), now: .now)
+        #expect(order.statusText == text)
         #expect(order.endsAt == nil)
+    }
+
+    @Test func unknownDeviceTypeFallsBackToName() {
+        var dto = Self.dto(status: 50)
+        dto.deviceTypeId = 0
+        dto.deviceTypeName = "吹风机"
+        dto.deviceNo = ""
+        #expect(LaundryMapping.order(dto, now: .now).title == "吹风机")
     }
 }
 
@@ -163,36 +188,33 @@ struct DecodingTests {
         #expect(!url.absoluteString.contains("pmn+J"))
     }
 
-    @Test func orderDetailDecodesServerFields() throws {
+    @Test func orderDecodesServerFields() throws {
         let json = """
-        {
+        [{
           "orderId": 123456,
           "orderNo": "20260922180550739848",
+          "deviceTypeId": 2,
+          "deviceNo": 7,
+          "storeName": "3舍1楼",
           "status": "40",
-          "statusRemark": "运行中",
+          "isPauseStatus": false,
+          "createAt": "2026-09-22T10:05:51Z",
           "remainTime": 1550,
-          "workTime": 35,
-          "cycle": "普通洗 | 筒自洁"
-        }
+          "workTime": 35
+        }]
         """.data(using: .utf8)!
-        let detail = try JSONDecoder().decode(OrderDetailDTO.self, from: json)
-        #expect(detail == OrderDetailDTO(
+        let orders = try JSONDecoder().decode([OrderDTO].self, from: json)
+        #expect(orders == [OrderDTO(
             orderId: "123456",
-            statusRemark: "运行中",
-            remainTime: 1550,
+            deviceTypeId: 2,
             deviceTypeName: "",
-            storeName: ""
-        ))
-    }
-
-    @Test func runningOrdersDecodeArray() throws {
-        let json = #"[{"orderId": 1}, {"orderId": "2"}]"#.data(using: .utf8)!
-        #expect(try JSONDecoder().decode(RunningOrdersData.self, from: json).orderIds == ["1", "2"])
-    }
-
-    @Test func runningOrdersDecodeWrappedList() throws {
-        let json = #"{"total": 1, "list": [{"id": 7}]}"#.data(using: .utf8)!
-        #expect(try JSONDecoder().decode(RunningOrdersData.self, from: json).orderIds == ["7"])
+            deviceNo: "7",
+            storeName: "3舍1楼",
+            status: 40,
+            isPaused: false,
+            createAt: "2026-09-22T10:05:51Z",
+            remainTime: 1550
+        )])
     }
 
     @Test func loadStatusesRequestsMachinesForFoundStores() async throws {
@@ -212,7 +234,8 @@ struct DecodingTests {
                     ? [MachineType(name: "洗衣机", kind: .washer, idle: 0, total: 4, waitMinutes: 15)]
                     : [MachineType(name: "烘干机", kind: .dryer, idle: 2, total: 2, waitMinutes: 0)]
             },
-            runningOrders: { _ in [] }
+            runningOrders: { _ in [] },
+            historyOrders: { _, _, _ in [] }
         )
         let statuses = try await client.loadStatuses(
             selected: [

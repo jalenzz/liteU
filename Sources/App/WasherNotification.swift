@@ -72,7 +72,7 @@ enum OrderReminder {
     private static let prefix = "order."
 
     /// 按当前使用中的订单重排结束提醒，已不在列表里的订单撤销提醒。
-    static func sync(_ orders: [RunningOrder]) async throws {
+    static func sync(_ orders: [Order]) async throws {
         let center = UNUserNotificationCenter.current()
         let current = Set(orders.map { prefix + $0.id })
         let stale = await center.pendingNotificationRequests()
@@ -87,7 +87,7 @@ enum OrderReminder {
         try await WasherNotification.authorize()
         for (order, fireDate) in due {
             let content = UNMutableNotificationContent()
-            content.title = order.machineName
+            content.title = order.title
             content.body = order.storeName.isEmpty ? "还有 1 分钟结束" : "\(order.storeName) · 还有 1 分钟结束"
             content.sound = .default
             let request = UNNotificationRequest(

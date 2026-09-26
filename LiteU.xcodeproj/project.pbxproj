@@ -45,6 +45,7 @@
 		F3924B596AB48E8307ABD127 /* StoreSelectionStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = F31AC2385AB2A19AACE2C795 /* StoreSelectionStore.swift */; };
 		FA98688DF9C050CA2A9E8B14 /* WasherNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = A77D7B2B1BBBB56C611A5462 /* WasherNotification.swift */; };
 		FD83000D5E7D94B6992D34ED /* StatusView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC0C7F8B5EFE26FB74D52A4B /* StatusView.swift */; };
+		0A1B2C3D4E5F607182930415 /* OrdersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D4E5F6071829304150 /* OrdersView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -109,6 +110,7 @@
 		DE709AA5EFDBFCA88F537A55 /* StorePickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorePickerView.swift; sourceTree = "<group>"; };
 		DED59E758A59301E4589B373 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		EC0C7F8B5EFE26FB74D52A4B /* StatusView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusView.swift; sourceTree = "<group>"; };
+		A1B2C3D4E5F6071829304150 /* OrdersView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrdersView.swift; sourceTree = "<group>"; };
 		F1FD14FB31C4B60651B97037 /* LiteUTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiteUTests.swift; sourceTree = "<group>"; };
 		F31AC2385AB2A19AACE2C795 /* StoreSelectionStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreSelectionStore.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -222,6 +224,7 @@
 				DED59E758A59301E4589B373 /* LoginView.swift */,
 				B48114A75FE411E7F87B594E /* PrivacyInfo.xcprivacy */,
 				DA77C5CD974523B1FF07C67C /* RootView.swift */,
+				A1B2C3D4E5F6071829304150 /* OrdersView.swift */,
 				EC0C7F8B5EFE26FB74D52A4B /* StatusView.swift */,
 				DE709AA5EFDBFCA88F537A55 /* StorePickerView.swift */,
 				A77D7B2B1BBBB56C611A5462 /* WasherNotification.swift */,
@@ -410,6 +413,7 @@
 				191484ED814845D66C18FDA3 /* LoginView.swift in Sources */,
 				5FDDDBCF74E339EFA3B70C1B /* Models.swift in Sources */,
 				B0283FD67647729DF2354E53 /* RootView.swift in Sources */,
+				0A1B2C3D4E5F607182930415 /* OrdersView.swift in Sources */,
 				FD83000D5E7D94B6992D34ED /* StatusView.swift in Sources */,
 				A4C6063AC1204C6D6481BAFC /* StorePickerView.swift in Sources */,
 				2D5E85E56F12CB011190EE4F /* StoreSelectionStore.swift in Sources */,

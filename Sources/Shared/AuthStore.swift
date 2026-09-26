@@ -28,4 +28,17 @@ final class AuthStore {
         token = nil
         mobile = nil
     }
+
+    /// 401 时退出登录；返回需要提示给用户的文案，取消或 401 时为 nil。
+    func message(for error: Error) -> String? {
+        switch error {
+        case is CancellationError:
+            return nil
+        case let error as UjingError where error.isUnauthorized:
+            clear()
+            return nil
+        default:
+            return error.localizedDescription
+        }
+    }
 }
