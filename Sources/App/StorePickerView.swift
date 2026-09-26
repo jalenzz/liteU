@@ -52,24 +52,28 @@ struct StorePickerView: View {
                     ProgressView()
                 }
                 ForEach(displayedStores) { store in
-                    HStack {
-                        VStack(alignment: .leading) {
-                            Text(store.name)
-                            if nearbyIDs.contains(store.id) {
-                                Text("洗衣机空闲 \(store.idle) / \(store.total)")
-                                    .font(.footnote)
-                                    .foregroundStyle(.secondary)
+                    let isSelected = selectedIDs.contains(store.id)
+                    Button {
+                        toggle(store)
+                    } label: {
+                        HStack {
+                            VStack(alignment: .leading) {
+                                Text(store.name)
+                                    .foregroundStyle(.primary)
+                                if nearbyIDs.contains(store.id) {
+                                    Text("洗衣机空闲 \(store.idle) / \(store.total)")
+                                        .font(.footnote)
+                                        .foregroundStyle(.secondary)
+                                }
+                            }
+                            Spacer()
+                            if isSelected {
+                                Image(systemName: "checkmark")
+                                    .foregroundStyle(.tint)
                             }
                         }
-                        Spacer()
-                        if selectedIDs.contains(store.id) {
-                            Image(systemName: "checkmark")
-                                .foregroundStyle(.secondary)
-                        }
                     }
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                    .contentShape(Rectangle())
-                    .onTapGesture { toggle(store) }
+                    .accessibilityAddTraits(isSelected ? .isSelected : [])
                 }
             }
         }
@@ -109,19 +113,11 @@ struct StorePickerView: View {
         }
     }
 
+    /// 已保存的店按保存顺序在前，其余附近店按距离顺序在后。
     private var displayedStores: [NearbyStore] {
-        let stores: [NearbyStore]
-        if nearby.isEmpty {
-            stores = selection.stores.map { NearbyStore(id: $0.id, name: $0.name, idle: 0, total: 0) }
-        } else {
-            var merged = nearby
-            let ids = Set(nearby.map(\.id))
-            for store in selection.stores where !ids.contains(store.id) {
-                merged.append(NearbyStore(id: store.id, name: store.name, idle: 0, total: 0))
-            }
-            stores = merged
-        }
-        return stores.filter { savedIDs.contains($0.id) } + stores.filter { !savedIDs.contains($0.id) }
+        let byID = Dictionary(uniqueKeysWithValues: nearby.map { ($0.id, $0) })
+        let saved = selection.stores.map { byID[$0.id] ?? NearbyStore(id: $0.id, name: $0.name, idle: 0, total: 0) }
+        return saved + nearby.filter { !savedIDs.contains($0.id) }
     }
 
     private var nearbyIDs: Set<String> {
@@ -167,14 +163,10 @@ struct StorePickerView: View {
     }
 
     private func save() {
-        let lat = searchLatitude!
-        let lont = searchLongitude!
-        var byID = Dictionary(uniqueKeysWithValues: selection.stores.map { ($0.id, $0) })
-        for store in nearby {
-            byID[store.id] = SelectedStore(id: store.id, name: store.name)
-        }
-        let stores = selectedIDs.map { byID[$0]! }
-        selection.save(PersistedSelection(stores: stores, latitude: lat, longitude: lont))
+        let stores = displayedStores
+            .filter { selectedIDs.contains($0.id) }
+            .map { SelectedStore(id: $0.id, name: $0.name) }
+        selection.save(PersistedSelection(stores: stores, latitude: searchLatitude!, longitude: searchLongitude!))
         WidgetCenter.shared.reloadAllTimelines()
         dismiss()
     }

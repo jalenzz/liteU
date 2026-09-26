@@ -10,6 +10,7 @@ struct NearbyStore: Equatable, Sendable, Identifiable {
 struct UjingClient: Sendable {
     var sendCaptcha: @Sendable (_ mobile: String) async throws -> Void
     var login: @Sendable (_ mobile: String, _ captcha: String) async throws -> String
+    /// 按 id 去重。
     var nearbyStores: @Sendable (_ lat: Double, _ lont: Double, _ token: String) async throws -> [NearbyStore]
     var machines: @Sendable (_ storeId: String, _ token: String) async throws -> [MachineType]
     var runningOrders: @Sendable (_ token: String) async throws -> [Order]
@@ -97,7 +98,8 @@ extension UjingClient {
                     ],
                     headers: UjingTransport.queryHeaders(token: token)
                 )
-                return payload.storeList.map { store in
+                var seen = Set<String>()
+                return payload.storeList.filter { seen.insert($0.id).inserted }.map { store in
                     let counts = LaundryMapping.washerCounts(storeInfo: store.storeInfo)
                     return NearbyStore(id: store.id, name: store.name, idle: counts.idle, total: counts.total)
                 }
