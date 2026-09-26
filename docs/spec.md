@@ -1,8 +1,8 @@
 # LiteU
 
-登录 U 净后，按定位选择附近洗衣房，查看洗衣机空闲与等待时间，主屏幕小组件展示最近一次快照。
+登录 U 净后，按定位选择附近洗衣房，查看洗衣机、烘干机、洗鞋机空闲与等待时间；显示当前账号使用中的机器剩余时间，结束前 1 分钟本地通知提醒。主屏幕小组件展示洗衣机最近一次快照。
 
-不含预约、扫码、单台机号、烘干机/干衣机。直连 `https://phoenix.ujing.online`，无自建后端。
+不含预约、扫码、单台机号。直连 `https://phoenix.ujing.online`，无自建后端。
 
 ## 架构
 
@@ -38,9 +38,10 @@ flowchart LR
 
 1. 无 JWT → 手机号 → 发短信 → 验证码 → 存 token。
 2. 已登录、未选店 → 定位（可手动改点）→ `stores/near` → 多选保存。
-3. 首页按选中 `storeId` 拉状态，下拉刷新。
+3. 首页按选中 `storeId` 拉各类机器状态，同时拉当前账号使用中的订单，下拉刷新。
 4. 每次成功查询写快照；小组件展示快照。系统刷新约 15 分钟。
-5. 查询 401 → 清 token → 回登录。
+5. 每次拉到使用中订单后重排结束提醒；已不在列表里的订单撤销提醒。
+6. 查询 401 → 清 token → 回登录。
 
 ## API
 
@@ -76,13 +77,23 @@ Header：`Authorization: Bearer <jwt>`，`x-app-code: ZA`，`x-app-version: 2.4.
 
 列表：`data.storeList[]`。洗衣机计数来自 `storeInfo` 中 `category == 1`：`num` 为总数，`access` 为空闲。
 
-### 等待时间
+### 机型与等待时间
 
 `GET /api/v1/devices/reserve?storeId=`
 
-Header 同附近店。仅当该店 `total > idle` 时调用。
+Header 同附近店。该店出现在附近结果里时调用。
 
-`data.devices[].device`：`deviceTypeName`，`free`，`total`，`waitTime`（分钟）。名称含「烘干」或「干衣」的丢弃。同店结果缓存 60 秒。
+`data.devices[].device`：`deviceTypeName`，`free`，`total`，`waitTime`（分钟）。按名称归类：含「鞋」为洗鞋机，含「烘干」或「干衣」为烘干机，其余为洗衣机。同店结果缓存 60 秒。
+
+### 使用中订单
+
+`GET /api/v1/orders/running`
+
+Header 同附近店。`data` 为订单数组，或包着订单数组的对象；`data` 为空视为无订单。每项取 `orderId`（无则 `id`）。
+
+`GET /api/v1/orders/{orderId}/detail`
+
+Header 同附近店。取 `statusRemark`，`remainTime`（秒），`deviceTypeName`，`storeName`。结束时刻 = 拉取时刻 + `remainTime`；`remainTime` 为 0（如启动中）时不倒计时、不提醒。
 
 ## 领域模型
 
@@ -91,13 +102,27 @@ StoreStatus
   id, name
   idle, total
   machines: [MachineType]
+  kinds: [KindStatus]
   waitMinutes
 
 MachineType
-  name, idle, total, waitMinutes
+  name, kind, idle, total, waitMinutes
+
+KindStatus
+  kind (washer / dryer / shoe), idle, total, waitMinutes
+
+RunningOrder
+  id, machineName, storeName, statusText, endsAt
 ```
 
-`idle` / `total` 为 `category == 1` 汇总。`machines` 仅未满员时有。`waitMinutes` 为 `machines` 里 `waitTime` 的最小正值。
+`idle` / `total` 为 `category == 1` 汇总。`kinds`：洗衣机空闲/总数用 `idle` / `total`，烘干机、洗鞋机用 `machines` 同类汇总；总数为 0 的类不显示。各类 `waitMinutes` 为同类 `waitTime` 的最小正值。`StoreStatus.waitMinutes` 为洗衣机的等待。
+
+## 通知
+
+本地通知，无推送。
+
+- 空闲提醒：按门店 + 机型手动开关，在最短等待结束前 2 分钟触发。
+- 结束提醒：使用中订单自动安排，在 `endsAt` 前 1 分钟触发；已不足 1 分钟的不安排。
 
 小组件快照：选中店的 `id/name/idle/total/waitMinutes` + `updatedAt`。不存 JWT。
 

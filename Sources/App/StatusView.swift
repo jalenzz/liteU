@@ -7,11 +7,13 @@ struct StatusView: View {
     @Environment(\.ujingClient) private var client
 
     @State private var statuses: [StoreStatus] = []
+    @State private var orders: [RunningOrder] = []
+    @State private var reminderError: String?
     @State private var updatedAt: Date?
     @State private var isLoading = false
     @State private var errorMessage: String?
     @State private var pickingStores = false
-    @State private var notifyIDs: Set<String> = []
+    @State private var notifyKeys: Set<String> = []
     @State private var notifyMessage: String?
 
     var body: some View {
@@ -20,9 +22,29 @@ struct StatusView: View {
                 ProgressView("正在查询…")
             } else {
                 List {
+                    if !orders.isEmpty {
+                        Section {
+                            ForEach(orders) { order in
+                                RunningOrderRow(order: order)
+                            }
+                        } header: {
+                            Text("使用中")
+                        } footer: {
+                            Text(reminderError ?? "结束前 1 分钟会发通知提醒")
+                        }
+                    }
                     ForEach(statuses) { store in
-                        StoreStatusRow(store: store, isArmed: notifyIDs.contains(store.id)) {
-                            await toggleNotify(store)
+                        Section(store.name) {
+                            if !store.found {
+                                Text("这次附近结果里没有这家店")
+                                    .foregroundStyle(.secondary)
+                            }
+                            ForEach(store.kinds) { kind in
+                                let key = WasherNotification.key(storeID: store.id, kind: kind.kind)
+                                KindStatusRow(kind: kind, isArmed: notifyKeys.contains(key)) {
+                                    await toggleNotify(store: store, kind: kind)
+                                }
+                            }
                         }
                     }
                     if let updatedAt {
@@ -34,7 +56,7 @@ struct StatusView: View {
                 .refreshable { await load() }
             }
         }
-        .navigationTitle("洗衣机")
+        .navigationTitle("洗衣房")
         .toolbar {
             ToolbarItem(placement: .topBarTrailing) {
                 Button("选择") { pickingStores = true }
@@ -63,44 +85,74 @@ struct StatusView: View {
         }
         .task(id: selection.stores.map(\.id).joined(separator: ",")) {
             await load()
-            notifyIDs = await WasherNotification.pendingStoreIDs()
+            notifyKeys = await WasherNotification.pendingKeys()
         }
     }
 
     private func load() async {
-        let saved = selection.selection!
+        let token = auth.token!
         isLoading = true
         defer { isLoading = false }
+        async let running: Void = loadOrders(token: token)
+        await loadStatuses(token: token)
+        await running
+    }
+
+    private func loadStatuses(token: String) async {
+        let saved = selection.selection!
         do {
             let result = try await client.loadStatuses(
                 selected: saved.stores,
                 latitude: saved.latitude,
                 longitude: saved.longitude,
-                token: auth.token!
+                token: token
             )
             statuses = result
             let now = Date()
             updatedAt = now
             WidgetSnapshotStore.save(LaundryMapping.snapshot(from: result, updatedAt: now))
             WidgetCenter.shared.reloadAllTimelines()
-        } catch is CancellationError {
-            return
-        } catch let error as UjingError where error.isUnauthorized {
-            auth.clear()
         } catch {
+            handle(error)
+        }
+    }
+
+    private func loadOrders(token: String) async {
+        do {
+            orders = try await client.runningOrders(token)
+        } catch {
+            handle(error)
+            return
+        }
+        do {
+            try await OrderReminder.sync(orders)
+            reminderError = nil
+        } catch {
+            reminderError = error.localizedDescription
+        }
+    }
+
+    private func handle(_ error: Error) {
+        switch error {
+        case is CancellationError:
+            return
+        case let error as UjingError where error.isUnauthorized:
+            auth.clear()
+        default:
             errorMessage = error.localizedDescription
         }
     }
 
-    private func toggleNotify(_ store: StoreStatus) async {
-        if notifyIDs.contains(store.id) {
-            WasherNotification.cancel(storeID: store.id)
-            notifyIDs.remove(store.id)
+    private func toggleNotify(store: StoreStatus, kind: KindStatus) async {
+        let key = WasherNotification.key(storeID: store.id, kind: kind.kind)
+        if notifyKeys.contains(key) {
+            WasherNotification.cancel(key: key)
+            notifyKeys.remove(key)
             return
         }
         do {
-            try await WasherNotification.schedule(store: store)
-            notifyIDs.insert(store.id)
+            try await WasherNotification.schedule(store: store, kind: kind)
+            notifyKeys.insert(key)
         } catch is CancellationError {
             return
         } catch {
@@ -109,15 +161,42 @@ struct StatusView: View {
     }
 }
 
-private struct StoreStatusRow: View {
-    var store: StoreStatus
+private struct RunningOrderRow: View {
+    var order: RunningOrder
+
+    var body: some View {
+        HStack(alignment: .center) {
+            VStack(alignment: .leading, spacing: 4) {
+                Text(order.machineName)
+                    .font(.headline)
+                Text([order.storeName, order.statusText].filter { !$0.isEmpty }.joined(separator: " · "))
+                    .font(.footnote)
+                    .foregroundStyle(.secondary)
+            }
+            Spacer(minLength: 8)
+            if let endsAt = order.endsAt {
+                VStack(alignment: .trailing, spacing: 2) {
+                    Text(timerInterval: Date.now...max(endsAt, .now), countsDown: true)
+                        .font(.title3.weight(.semibold).monospacedDigit())
+                    Text("\(endsAt.formatted(date: .omitted, time: .shortened)) 结束")
+                        .font(.caption)
+                        .foregroundStyle(.secondary)
+                }
+            }
+        }
+        .padding(.vertical, 4)
+    }
+}
+
+private struct KindStatusRow: View {
+    var kind: KindStatus
     var isArmed: Bool
     var onNotify: () async -> Void
 
     var body: some View {
         HStack(alignment: .center) {
             VStack(alignment: .leading, spacing: 4) {
-                Text(store.name)
+                Text(kind.kind.title)
                     .font(.headline)
                 Text(statusLine)
                     .font(.footnote)
@@ -137,15 +216,12 @@ private struct StoreStatusRow: View {
     }
 
     private var statusLine: String {
-        if !store.found {
-            return "这次附近结果里没有这家店"
-        }
-        var parts = ["空闲 \(store.idle) / \(store.total)"]
-        if let wait = store.waitMinutes {
+        var parts = ["空闲 \(kind.idle) / \(kind.total)"]
+        if let wait = kind.waitMinutes {
             parts.append("最短等待 \(wait) 分钟")
-        } else if store.total > store.idle {
+        } else if kind.total > kind.idle {
             parts.append("最短等待暂不可用")
-        } else if store.total > 0 {
+        } else {
             parts.append("全部空闲")
         }
         return parts.joined(separator: "  ")

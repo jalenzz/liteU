@@ -1,12 +1,44 @@
 import Foundation
 
+enum MachineKind: String, CaseIterable, Sendable {
+    case washer, dryer, shoe
+
+    init(typeName: String) {
+        if typeName.contains("鞋") {
+            self = .shoe
+        } else if typeName.contains("烘干") || typeName.contains("干衣") {
+            self = .dryer
+        } else {
+            self = .washer
+        }
+    }
+
+    var title: String {
+        switch self {
+        case .washer: "洗衣机"
+        case .dryer: "烘干机"
+        case .shoe: "洗鞋机"
+        }
+    }
+}
+
 struct MachineType: Equatable, Sendable, Identifiable {
     var name: String
+    var kind: MachineKind
     var idle: Int
     var total: Int
     var waitMinutes: Int
 
     var id: String { name }
+}
+
+struct KindStatus: Equatable, Sendable, Identifiable {
+    var kind: MachineKind
+    var idle: Int
+    var total: Int
+    var waitMinutes: Int?
+
+    var id: MachineKind { kind }
 }
 
 struct StoreStatus: Equatable, Sendable, Identifiable {
@@ -15,8 +47,23 @@ struct StoreStatus: Equatable, Sendable, Identifiable {
     var idle: Int
     var total: Int
     var machines: [MachineType]
-    var waitMinutes: Int?
     var found: Bool
+
+    var kinds: [KindStatus] {
+        LaundryMapping.kinds(washerIdle: idle, washerTotal: total, machines: machines)
+    }
+
+    var waitMinutes: Int? {
+        kinds.first { $0.kind == .washer }?.waitMinutes
+    }
+}
+
+struct RunningOrder: Equatable, Sendable, Identifiable {
+    var id: String
+    var machineName: String
+    var storeName: String
+    var statusText: String
+    var endsAt: Date?
 }
 
 struct SelectedStore: Codable, Equatable, Hashable, Sendable, Identifiable {
@@ -53,14 +100,12 @@ enum LaundryMapping {
     }
 
     static func machines(from devices: [ReserveDeviceDTO]) -> [MachineType] {
-        devices.compactMap { item in
+        devices.map { item in
             let device = item.device
-            let name = device.deviceTypeName
-            if name.contains("烘干") || name.contains("干衣") {
-                return nil
-            }
+            let name = device.deviceTypeName.isEmpty ? "洗衣机" : device.deviceTypeName
             return MachineType(
-                name: name.isEmpty ? "洗衣机" : name,
+                name: name,
+                kind: MachineKind(typeName: name),
                 idle: device.free,
                 total: device.total,
                 waitMinutes: device.waitTime
@@ -70,6 +115,26 @@ enum LaundryMapping {
 
     static func waitMinutes(_ machines: [MachineType]) -> Int? {
         machines.map(\.waitMinutes).filter { $0 > 0 }.min()
+    }
+
+    static func kinds(washerIdle: Int, washerTotal: Int, machines: [MachineType]) -> [KindStatus] {
+        MachineKind.allCases.compactMap { kind in
+            let group = machines.filter { $0.kind == kind }
+            let idle = kind == .washer ? washerIdle : group.reduce(0) { $0 + $1.idle }
+            let total = kind == .washer ? washerTotal : group.reduce(0) { $0 + $1.total }
+            guard total > 0 else { return nil }
+            return KindStatus(kind: kind, idle: idle, total: total, waitMinutes: waitMinutes(group))
+        }
+    }
+
+    static func runningOrder(_ detail: OrderDetailDTO, now: Date) -> RunningOrder {
+        RunningOrder(
+            id: detail.orderId,
+            machineName: detail.deviceTypeName.isEmpty ? "使用中的机器" : detail.deviceTypeName,
+            storeName: detail.storeName,
+            statusText: detail.statusRemark,
+            endsAt: detail.remainTime > 0 ? now.addingTimeInterval(TimeInterval(detail.remainTime)) : nil
+        )
     }
 
     static func snapshot(from statuses: [StoreStatus], updatedAt: Date) -> WidgetSnapshot {
@@ -97,4 +162,12 @@ struct ReserveDeviceFields: Equatable, Sendable {
     var free: Int
     var total: Int
     var waitTime: Int
+}
+
+struct OrderDetailDTO: Equatable, Sendable {
+    var orderId: String
+    var statusRemark: String
+    var remainTime: Int
+    var deviceTypeName: String
+    var storeName: String
 }
