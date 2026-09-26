@@ -26,7 +26,7 @@ struct StatusView: View {
                     ForEach(statuses) { store in
                         Section(store.name) {
                             if !store.found {
-                                Text("这次附近结果里没有这家店")
+                                Text("暂时查不到这家洗衣房")
                                     .foregroundStyle(.secondary)
                             }
                             ForEach(store.kinds.filter { isVisible($0.kind) }) { kind in
@@ -51,7 +51,7 @@ struct StatusView: View {
         .navigationTitle("洗衣房")
         .toolbar {
             ToolbarItem(placement: .topBarTrailing) {
-                Button("选择") { pickingStores = true }
+                Button("管理") { pickingStores = true }
             }
         }
         .sheet(isPresented: $pickingStores) {

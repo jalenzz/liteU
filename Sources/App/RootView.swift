@@ -36,14 +36,14 @@ private struct MainTabView: View {
                 StatusView()
             }
             .tabItem {
-                Label("首页", systemImage: "house")
+                Label("洗衣房", systemImage: "washer")
             }
 
             NavigationStack {
                 OrdersView()
             }
             .tabItem {
-                Label("订单", systemImage: "list.bullet.rectangle")
+                Label("订单", systemImage: "receipt")
             }
             .badge(orderStore.running.count)
 
@@ -69,7 +69,7 @@ private struct SettingsView: View {
             Section("账号") {
                 LabeledContent("手机号", value: auth.mobile.map { "\($0.prefix(3))****\($0.suffix(4))" } ?? "重新登录后显示")
             }
-            Section("首页显示") {
+            Section("显示的机器") {
                 Toggle("烘干机", isOn: $showDryers)
                 Toggle("洗鞋机", isOn: $showShoeWashers)
             }

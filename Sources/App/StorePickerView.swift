@@ -22,27 +22,29 @@ struct StorePickerView: View {
     var body: some View {
         List {
             Section {
-                Button("定位附近洗衣房") {
+                Button("使用当前位置", systemImage: "location") {
                     location.request()
                 }
                 .disabled(isLoading)
             } footer: {
-                Text(location.errorMessage ?? "用当前定位列出附近店。")
+                if let message = location.errorMessage {
+                    Text(message)
+                }
             }
 
             Section {
-                TextField("纬度，如 30.676", text: $latText)
-                    .keyboardType(.decimalPad)
-                TextField("经度，如 104.094", text: $lontText)
-                    .keyboardType(.decimalPad)
-                Button("按坐标查找") {
-                    Task { await search() }
+                DisclosureGroup("手动输入坐标") {
+                    TextField("纬度，如 30.676", text: $latText)
+                        .keyboardType(.decimalPad)
+                    TextField("经度，如 104.094", text: $lontText)
+                        .keyboardType(.decimalPad)
+                    Button("查找") {
+                        Task { await search() }
+                    }
+                    .disabled(isLoading)
                 }
-                .disabled(isLoading)
-            } header: {
-                Text("手动坐标")
             } footer: {
-                Text("请手动填写坐标")
+                Text("无法使用当前位置时使用")
             }
 
             Section("附近洗衣房") {
@@ -54,7 +56,7 @@ struct StorePickerView: View {
                         VStack(alignment: .leading) {
                             Text(store.name)
                             if nearbyIDs.contains(store.id) {
-                                Text("空闲 \(store.idle) / \(store.total)")
+                                Text("洗衣机空闲 \(store.idle) / \(store.total)")
                                     .font(.footnote)
                                     .foregroundStyle(.secondary)
                             }
@@ -71,7 +73,7 @@ struct StorePickerView: View {
                 }
             }
         }
-        .navigationTitle("选择洗衣房")
+        .navigationTitle("管理洗衣房")
         .toolbar {
             if showsLogout {
                 ToolbarItem(placement: .cancellationAction) {
@@ -79,11 +81,11 @@ struct StorePickerView: View {
                 }
             }
             ToolbarItem(placement: .confirmationAction) {
-                Button("保存") { save() }
+                Button("完成") { save() }
                     .disabled(selectedIDs.isEmpty || searchLatitude == nil)
             }
         }
-        .alert("无法加载附近店", isPresented: Binding(
+        .alert("无法加载附近洗衣房", isPresented: Binding(
             get: { errorMessage != nil },
             set: { if !$0 { errorMessage = nil } }
         )) {

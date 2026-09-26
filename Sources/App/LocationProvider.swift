@@ -22,7 +22,7 @@ final class LocationProvider: NSObject, CLLocationManagerDelegate {
         case .authorizedAlways, .authorizedWhenInUse:
             manager.startUpdatingLocation()
         default:
-            errorMessage = "定位未授权，请改为手动填写坐标"
+            errorMessage = "未授权使用位置，请手动输入坐标"
         }
     }
 
@@ -43,6 +43,6 @@ final class LocationProvider: NSObject, CLLocationManagerDelegate {
 
     func locationManager(_ manager: CLLocationManager, didFailWithError _: Error) {
         manager.stopUpdatingLocation()
-        errorMessage = "定位失败，请改为手动填写坐标"
+        errorMessage = "无法获取当前位置，请手动输入坐标"
     }
 }
