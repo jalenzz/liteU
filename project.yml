@@ -51,10 +51,6 @@ targets:
         UISupportedInterfaceOrientations:
           - UIInterfaceOrientationPortrait
         NSLocationWhenInUseUsageDescription: 用于查找附近洗衣房
-        CFBundleURLTypes:
-          - CFBundleURLName: com.liteu.app
-            CFBundleURLSchemes:
-              - liteu
     entitlements:
       path: Sources/App/LiteU.entitlements
       properties:
