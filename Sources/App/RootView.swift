@@ -1,4 +1,5 @@
 import SwiftUI
+import WidgetKit
 
 struct RootView: View {
     @Environment(AuthStore.self) private var auth
@@ -21,7 +22,12 @@ struct RootView: View {
         }
         .onChange(of: auth.token == nil) { _, loggedOut in
             if loggedOut {
-                Task { await orderStore.reset() }
+                WidgetSnapshotStore.clear()
+                WidgetCenter.shared.reloadAllTimelines()
+                Task {
+                    await orderStore.reset()
+                    await WasherNotification.cancelAll()
+                }
             }
         }
     }

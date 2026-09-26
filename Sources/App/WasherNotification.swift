@@ -29,6 +29,16 @@ enum WasherNotification {
         guard granted else { throw NotifyError.denied }
     }
 
+    static func authorizationStatus() async -> UNAuthorizationStatus {
+        await UNUserNotificationCenter.current().notificationSettings().authorizationStatus
+    }
+
+    static func cancelAll() async {
+        let center = UNUserNotificationCenter.current()
+        let ids = await center.pendingNotificationRequests().map(\.identifier).filter { $0.hasPrefix(prefix) }
+        center.removePendingNotificationRequests(withIdentifiers: ids)
+    }
+
     static func schedule(store: StoreStatus, kind: KindStatus) async throws {
         guard let wait = kind.waitMinutes else {
             throw NotifyError.noWait
@@ -71,8 +81,8 @@ enum WasherNotification {
 enum OrderReminder {
     private static let prefix = "order."
 
-    /// 按当前使用中的订单重排结束提醒，已不在列表里的订单撤销提醒。
-    static func sync(_ orders: [Order]) async throws {
+    /// 按当前使用中的订单重排结束提醒，已不在列表里的订单撤销提醒。未获通知授权时只撤销、不申请。
+    static func sync(_ orders: [Order], authorized: Bool) async throws {
         let center = UNUserNotificationCenter.current()
         let current = Set(orders.map { prefix + $0.id })
         let stale = await center.pendingNotificationRequests()
@@ -80,12 +90,11 @@ enum OrderReminder {
             .filter { $0.hasPrefix(prefix) && !current.contains($0) }
         center.removePendingNotificationRequests(withIdentifiers: stale)
 
-        let due = orders.compactMap { order in
-            order.endsAt.map { (order, OrderReminderTiming.fireDate(endsAt: $0)) }
-        }.filter { $0.1 > .now }
-        guard !due.isEmpty else { return }
-        try await WasherNotification.authorize()
-        for (order, fireDate) in due {
+        guard authorized else { return }
+        for order in orders {
+            guard let endsAt = order.endsAt else { continue }
+            let interval = OrderReminderTiming.fireDate(endsAt: endsAt).timeIntervalSinceNow
+            guard interval > 0 else { continue }
             let content = UNMutableNotificationContent()
             content.title = order.title
             content.body = order.storeName.isEmpty ? "还有 1 分钟结束" : "\(order.storeName) · 还有 1 分钟结束"
@@ -93,7 +102,7 @@ enum OrderReminder {
             let request = UNNotificationRequest(
                 identifier: prefix + order.id,
                 content: content,
-                trigger: UNTimeIntervalNotificationTrigger(timeInterval: fireDate.timeIntervalSinceNow, repeats: false)
+                trigger: UNTimeIntervalNotificationTrigger(timeInterval: interval, repeats: false)
             )
             try await center.add(request)
         }

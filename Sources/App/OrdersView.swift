@@ -1,4 +1,5 @@
 import SwiftUI
+import UserNotifications
 
 enum AppSettings {
     static let showDryers = "showDryers"
@@ -11,6 +12,7 @@ enum AppSettings {
 final class OrderStore {
     private(set) var running: [Order] = []
     private(set) var reminderError: String?
+    private(set) var notificationStatus: UNAuthorizationStatus = .notDetermined
 
     func refreshRunning(client: UjingClient, token: String) async throws {
         running = try await client.runningOrders(token)
@@ -24,12 +26,20 @@ final class OrderStore {
 
     func syncReminders() async {
         let enabled = UserDefaults.standard.object(forKey: AppSettings.remindBeforeEnd) as? Bool ?? true
+        notificationStatus = await WasherNotification.authorizationStatus()
+        let authorized = [.authorized, .provisional, .ephemeral].contains(notificationStatus)
         do {
-            try await OrderReminder.sync(enabled ? running : [])
+            try await OrderReminder.sync(enabled ? running : [], authorized: authorized)
             reminderError = nil
         } catch {
             reminderError = error.localizedDescription
         }
+    }
+
+    /// 用户拒绝时 `authorize` 会抛错，结果以 `notificationStatus` 为准。
+    func requestNotifications() async {
+        try? await WasherNotification.authorize()
+        await syncReminders()
     }
 }
 
@@ -39,6 +49,8 @@ struct OrdersView: View {
     @Environment(AuthStore.self) private var auth
     @Environment(OrderStore.self) private var orderStore
     @Environment(\.ujingClient) private var client
+    @Environment(\.openURL) private var openURL
+    @Environment(\.scenePhase) private var scenePhase
     @AppStorage(AppSettings.remindBeforeEnd) private var remindBeforeEnd = true
 
     @State private var history: [Order] = []
@@ -61,7 +73,7 @@ struct OrdersView: View {
                 Text("使用中")
             } footer: {
                 if !orderStore.running.isEmpty {
-                    Text(remindBeforeEnd ? orderStore.reminderError ?? "结束前 1 分钟会发通知提醒" : "结束提醒已在设置中关闭")
+                    reminderFooter
                 }
             }
 
@@ -87,6 +99,11 @@ struct OrdersView: View {
         .navigationTitle("订单")
         .refreshable { await reload() }
         .task { await reload() }
+        .onChange(of: scenePhase) { _, phase in
+            if phase == .active {
+                Task { await orderStore.syncReminders() }
+            }
+        }
         .alert("查询失败", isPresented: Binding(
             get: { errorMessage != nil },
             set: { if !$0 { errorMessage = nil } }
@@ -94,6 +111,26 @@ struct OrdersView: View {
             Button("好", role: .cancel) {}
         } message: {
             Text(errorMessage ?? "")
+        }
+    }
+
+    @ViewBuilder
+    private var reminderFooter: some View {
+        if !remindBeforeEnd {
+            Text("结束提醒已在设置中关闭")
+        } else {
+            switch orderStore.notificationStatus {
+            case .notDetermined:
+                Button("允许通知，结束前 1 分钟提醒") {
+                    Task { await orderStore.requestNotifications() }
+                }
+            case .denied:
+                Button("通知已关闭，前往系统设置开启") {
+                    openURL(URL(string: UIApplication.openNotificationSettingsURLString)!)
+                }
+            default:
+                Text(orderStore.reminderError ?? "结束前 1 分钟会发通知提醒")
+            }
         }
     }
 
