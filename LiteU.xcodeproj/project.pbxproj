@@ -13,29 +13,27 @@
 		1B2E905373B590320168FEFD /* CaptchaSignature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 732BFA6941C691E682BBCBC5 /* CaptchaSignature.swift */; };
 		1DAB66FAA7E195C1C7344B13 /* CaptchaSignature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 732BFA6941C691E682BBCBC5 /* CaptchaSignature.swift */; };
 		2D5E85E56F12CB011190EE4F /* StoreSelectionStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = F31AC2385AB2A19AACE2C795 /* StoreSelectionStore.swift */; };
-		2E04AAE8D0857A21F139AA01 /* LiteUWidget.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = B9BBF113F4E42BC4766588DE /* LiteUWidget.appex */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2E04AAE8D0857A21F139AA01 /* LiteUWidget.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = B9BBF113F4E42BC4766588DE /* LiteUWidget.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		33320BDBAF5E3D2FBA573DFF /* UjingError.swift in Sources */ = {isa = PBXBuildFile; fileRef = D94FC818875CB28CBCE1A1E6 /* UjingError.swift */; };
 		360A2672D495D4C1B2103291 /* AuthStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A0E2880BBA208924082FD64 /* AuthStore.swift */; };
 		371E32A3EEDA4CA19FFADDC3 /* WasherNotifyTiming.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EAC5C82E8942D20ACD1BAE3 /* WasherNotifyTiming.swift */; };
+		4448439D035A8BF88A731D10 /* OrdersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DEA15E659FAE4EFF960263F /* OrdersView.swift */; };
 		4A4BD932BA8F70E309ABFDF1 /* TokenKeychain.swift in Sources */ = {isa = PBXBuildFile; fileRef = A31FBCACD1C7C5D6667986B4 /* TokenKeychain.swift */; };
-		50EB408D972B3170FD037D4C /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8A8D1DEB0B7A2041719F4D3C /* WidgetKit.framework */; };
 		5FDDDBCF74E339EFA3B70C1B /* Models.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F1009EB22F9EB2F4DE463EC /* Models.swift */; };
 		62FE0EB343CF34887BF1A989 /* UjingClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E285915071DD51222536A27 /* UjingClient.swift */; };
 		6470E867D82542F2C3BA6DF8 /* StatusWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2363B9BF13CF134CA251DB45 /* StatusWidget.swift */; };
-		770EE42A281C6EF97B6F2737 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8A8D1DEB0B7A2041719F4D3C /* WidgetKit.framework */; };
 		7B160EB3EB8873C7B1820FB3 /* AppGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 043F573BAB9F76C56887C672 /* AppGroup.swift */; };
 		7F9B9B61915CA7250613F9F9 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = B48114A75FE411E7F87B594E /* PrivacyInfo.xcprivacy */; };
 		90CF3EDE1BF28099B3063052 /* LiteUTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1FD14FB31C4B60651B97037 /* LiteUTests.swift */; };
 		98BE8CB7CFEBD79CB649C68D /* WasherNotifyTiming.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EAC5C82E8942D20ACD1BAE3 /* WasherNotifyTiming.swift */; };
 		996CF8C9383E5C1822EC7B73 /* WidgetSnapshotStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CC099D0A6BED1B17CBF0104 /* WidgetSnapshotStore.swift */; };
+		9BE20F9D36768CCB65D3FCEA /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = F0819682DF85D163BA1DC941 /* PrivacyInfo.xcprivacy */; };
 		A4C6063AC1204C6D6481BAFC /* StorePickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE709AA5EFDBFCA88F537A55 /* StorePickerView.swift */; };
-		AD49C242251F4F189C243A89 /* AppIntents.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A12F5FCCFFC74796BE55331 /* AppIntents.framework */; };
 		B0283FD67647729DF2354E53 /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA77C5CD974523B1FF07C67C /* RootView.swift */; };
 		B68919B794F82AC8E5DC8527 /* AppGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 043F573BAB9F76C56887C672 /* AppGroup.swift */; };
 		BC439980CBFCFFE05597605D /* StoreWidgetIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B0CFDE4C38FA62F2F140398 /* StoreWidgetIntent.swift */; };
 		BE087371BA9FE3B23DD43E3D /* TokenKeychain.swift in Sources */ = {isa = PBXBuildFile; fileRef = A31FBCACD1C7C5D6667986B4 /* TokenKeychain.swift */; };
 		C2C8D492F48D81199591E6DA /* Models.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F1009EB22F9EB2F4DE463EC /* Models.swift */; };
-		CB349F5ECF7CBCB918D97C33 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 743D591F534408952D855D8A /* SwiftUI.framework */; };
 		D2338B44FDDEE0FF30810FD5 /* UjingClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E285915071DD51222536A27 /* UjingClient.swift */; };
 		D79309A3BC278E58331BF020 /* WidgetSnapshotStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CC099D0A6BED1B17CBF0104 /* WidgetSnapshotStore.swift */; };
 		E343D1718EF45B1405FC83BC /* LiteUApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67933EB9D56C95E9CF9E3937 /* LiteUApp.swift */; };
@@ -45,7 +43,6 @@
 		F3924B596AB48E8307ABD127 /* StoreSelectionStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = F31AC2385AB2A19AACE2C795 /* StoreSelectionStore.swift */; };
 		FA98688DF9C050CA2A9E8B14 /* WasherNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = A77D7B2B1BBBB56C611A5462 /* WasherNotification.swift */; };
 		FD83000D5E7D94B6992D34ED /* StatusView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC0C7F8B5EFE26FB74D52A4B /* StatusView.swift */; };
-		0A1B2C3D4E5F607182930415 /* OrdersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D4E5F6071829304150 /* OrdersView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -81,60 +78,36 @@
 
 /* Begin PBXFileReference section */
 		043F573BAB9F76C56887C672 /* AppGroup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppGroup.swift; sourceTree = "<group>"; };
-		1A12F5FCCFFC74796BE55331 /* AppIntents.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppIntents.framework; path = System/Library/Frameworks/AppIntents.framework; sourceTree = SDKROOT; };
+		0DEA15E659FAE4EFF960263F /* OrdersView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrdersView.swift; sourceTree = "<group>"; };
 		1E285915071DD51222536A27 /* UjingClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UjingClient.swift; sourceTree = "<group>"; };
 		1FAE80E145DAA8FFAE25066A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		2363B9BF13CF134CA251DB45 /* StatusWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusWidget.swift; sourceTree = "<group>"; };
-		29D2E4AA10B0A0B9F7AD01A4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
-		47997A6A69F6BE76A8DE6F47 /* LiteU.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LiteU.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		47997A6A69F6BE76A8DE6F47 /* LiteU.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = LiteU.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		47AAC8DFF9109F1FB51F4872 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		4B0CFDE4C38FA62F2F140398 /* StoreWidgetIntent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreWidgetIntent.swift; sourceTree = "<group>"; };
 		5B60EC89E787D930D13F40CC /* LiteUTests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = LiteUTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		67933EB9D56C95E9CF9E3937 /* LiteUApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiteUApp.swift; sourceTree = "<group>"; };
 		6EAC5C82E8942D20ACD1BAE3 /* WasherNotifyTiming.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WasherNotifyTiming.swift; sourceTree = "<group>"; };
 		732BFA6941C691E682BBCBC5 /* CaptchaSignature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaptchaSignature.swift; sourceTree = "<group>"; };
-		743D591F534408952D855D8A /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
 		76313A70857F5C3E6A960B7F /* LiteU.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = LiteU.entitlements; sourceTree = "<group>"; };
 		789ADC83610BE6617833A734 /* LiteUWidget.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = LiteUWidget.entitlements; sourceTree = "<group>"; };
 		7CC099D0A6BED1B17CBF0104 /* WidgetSnapshotStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetSnapshotStore.swift; sourceTree = "<group>"; };
 		8A0E2880BBA208924082FD64 /* AuthStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthStore.swift; sourceTree = "<group>"; };
-		8A8D1DEB0B7A2041719F4D3C /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
 		8F1009EB22F9EB2F4DE463EC /* Models.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Models.swift; sourceTree = "<group>"; };
 		9C5956D3DA7E35D9570A84E1 /* LocationProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationProvider.swift; sourceTree = "<group>"; };
 		A31FBCACD1C7C5D6667986B4 /* TokenKeychain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenKeychain.swift; sourceTree = "<group>"; };
 		A77D7B2B1BBBB56C611A5462 /* WasherNotification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WasherNotification.swift; sourceTree = "<group>"; };
-		B48114A75FE411E7F87B594E /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
+		B48114A75FE411E7F87B594E /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		B9BBF113F4E42BC4766588DE /* LiteUWidget.appex */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = "wrapper.app-extension"; path = LiteUWidget.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		D94FC818875CB28CBCE1A1E6 /* UjingError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UjingError.swift; sourceTree = "<group>"; };
 		DA77C5CD974523B1FF07C67C /* RootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
 		DE709AA5EFDBFCA88F537A55 /* StorePickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorePickerView.swift; sourceTree = "<group>"; };
 		DED59E758A59301E4589B373 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		EC0C7F8B5EFE26FB74D52A4B /* StatusView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusView.swift; sourceTree = "<group>"; };
-		A1B2C3D4E5F6071829304150 /* OrdersView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrdersView.swift; sourceTree = "<group>"; };
+		F0819682DF85D163BA1DC941 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		F1FD14FB31C4B60651B97037 /* LiteUTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiteUTests.swift; sourceTree = "<group>"; };
 		F31AC2385AB2A19AACE2C795 /* StoreSelectionStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreSelectionStore.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
-
-/* Begin PBXFrameworksBuildPhase section */
-		6034AB8B032C4C85ABB9898B /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				770EE42A281C6EF97B6F2737 /* WidgetKit.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		6080D785D8AD92EA75C78BA8 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				50EB408D972B3170FD037D4C /* WidgetKit.framework in Frameworks */,
-				CB349F5ECF7CBCB918D97C33 /* SwiftUI.framework in Frameworks */,
-				AD49C242251F4F189C243A89 /* AppIntents.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
 		72FF1EA6498AD85CCEBBCFE3 /* Sources */ = {
@@ -152,6 +125,7 @@
 			children = (
 				47AAC8DFF9109F1FB51F4872 /* Info.plist */,
 				789ADC83610BE6617833A734 /* LiteUWidget.entitlements */,
+				F0819682DF85D163BA1DC941 /* PrivacyInfo.xcprivacy */,
 				2363B9BF13CF134CA251DB45 /* StatusWidget.swift */,
 			);
 			path = Widget;
@@ -162,7 +136,6 @@
 			children = (
 				72FF1EA6498AD85CCEBBCFE3 /* Sources */,
 				FC314D2A716DA9CA26B08D39 /* Tests */,
-				F9C868A62DC677949D9ED7B3 /* Frameworks */,
 				FA152AB299AB549FF1A73247 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -183,16 +156,6 @@
 				7CC099D0A6BED1B17CBF0104 /* WidgetSnapshotStore.swift */,
 			);
 			path = Shared;
-			sourceTree = "<group>";
-		};
-		F9C868A62DC677949D9ED7B3 /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				1A12F5FCCFFC74796BE55331 /* AppIntents.framework */,
-				743D591F534408952D855D8A /* SwiftUI.framework */,
-				8A8D1DEB0B7A2041719F4D3C /* WidgetKit.framework */,
-			);
-			name = Frameworks;
 			sourceTree = "<group>";
 		};
 		FA152AB299AB549FF1A73247 /* Products */ = {
@@ -217,14 +180,13 @@
 			isa = PBXGroup;
 			children = (
 				1FAE80E145DAA8FFAE25066A /* Assets.xcassets */,
-				29D2E4AA10B0A0B9F7AD01A4 /* Info.plist */,
 				76313A70857F5C3E6A960B7F /* LiteU.entitlements */,
 				67933EB9D56C95E9CF9E3937 /* LiteUApp.swift */,
 				9C5956D3DA7E35D9570A84E1 /* LocationProvider.swift */,
 				DED59E758A59301E4589B373 /* LoginView.swift */,
+				0DEA15E659FAE4EFF960263F /* OrdersView.swift */,
 				B48114A75FE411E7F87B594E /* PrivacyInfo.xcprivacy */,
 				DA77C5CD974523B1FF07C67C /* RootView.swift */,
-				A1B2C3D4E5F6071829304150 /* OrdersView.swift */,
 				EC0C7F8B5EFE26FB74D52A4B /* StatusView.swift */,
 				DE709AA5EFDBFCA88F537A55 /* StorePickerView.swift */,
 				A77D7B2B1BBBB56C611A5462 /* WasherNotification.swift */,
@@ -258,7 +220,7 @@
 			buildConfigurationList = 314E140FF490B38E197952C2 /* Build configuration list for PBXNativeTarget "LiteUWidget" */;
 			buildPhases = (
 				ADD68799A8135559D19966A0 /* Sources */,
-				6080D785D8AD92EA75C78BA8 /* Frameworks */,
+				91F0A4D32E6CB44876B03299 /* Resources */,
 			);
 			buildRules = (
 			);
@@ -278,7 +240,6 @@
 				579FD31CFFDB53B94DD51F73 /* Copy captcha HMAC key */,
 				FA3525EA21F87530BEC6D553 /* Sources */,
 				014C5206F28AA41BCF3CE917 /* Resources */,
-				6034AB8B032C4C85ABB9898B /* Frameworks */,
 				00D664BF806D08069DB1D423 /* Embed Foundation Extensions */,
 			);
 			buildRules = (
@@ -317,11 +278,11 @@
 				};
 			};
 			buildConfigurationList = 64C6231740245283FF774E5E /* Build configuration list for PBXProject "LiteU" */;
-			developmentRegion = en;
+			developmentRegion = "zh-Hans";
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				Base,
-				en,
+				"zh-Hans",
 			);
 			mainGroup = A6976404396F1127667DF7EC;
 			minimizedProjectReferenceProxies = 1;
@@ -344,6 +305,14 @@
 			files = (
 				08E823F3364FA0269F08D8C1 /* Assets.xcassets in Resources */,
 				7F9B9B61915CA7250613F9F9 /* PrivacyInfo.xcprivacy in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		91F0A4D32E6CB44876B03299 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9BE20F9D36768CCB65D3FCEA /* PrivacyInfo.xcprivacy in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -412,8 +381,8 @@
 				ECDD0850EE576E9AA643C50F /* LocationProvider.swift in Sources */,
 				191484ED814845D66C18FDA3 /* LoginView.swift in Sources */,
 				5FDDDBCF74E339EFA3B70C1B /* Models.swift in Sources */,
+				4448439D035A8BF88A731D10 /* OrdersView.swift in Sources */,
 				B0283FD67647729DF2354E53 /* RootView.swift in Sources */,
-				0A1B2C3D4E5F607182930415 /* OrdersView.swift in Sources */,
 				FD83000D5E7D94B6992D34ED /* StatusView.swift in Sources */,
 				A4C6063AC1204C6D6481BAFC /* StorePickerView.swift in Sources */,
 				2D5E85E56F12CB011190EE4F /* StoreSelectionStore.swift in Sources */,
@@ -450,11 +419,11 @@
 				CODE_SIGN_ENTITLEMENTS = Sources/App/LiteU.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = Sources/App/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = LiteU;
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "用于查找附近洗衣房";
-				INFOPLIST_KEY_UIRequiresFullScreen = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = UIInterfaceOrientationPortrait;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -522,9 +491,8 @@
 				SDKROOT = iphoneos;
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
-				SWIFT_STRICT_CONCURRENCY = complete;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = 1;
+				SWIFT_VERSION = 6.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
 		};
@@ -609,9 +577,8 @@
 				SDKROOT = iphoneos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_STRICT_CONCURRENCY = complete;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = 1;
+				SWIFT_VERSION = 6.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
@@ -621,6 +588,7 @@
 				CODE_SIGN_ENTITLEMENTS = Sources/Widget/LiteUWidget.entitlements;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Sources/Widget/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = LiteU;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -656,11 +624,11 @@
 				CODE_SIGN_ENTITLEMENTS = Sources/App/LiteU.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = Sources/App/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = LiteU;
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "用于查找附近洗衣房";
-				INFOPLIST_KEY_UIRequiresFullScreen = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = UIInterfaceOrientationPortrait;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -677,6 +645,7 @@
 				CODE_SIGN_ENTITLEMENTS = Sources/Widget/LiteUWidget.entitlements;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Sources/Widget/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = LiteU;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
