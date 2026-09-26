@@ -15,9 +15,9 @@ final class AuthStore {
         mobile = TokenKeychain.load(account: "mobile")
     }
 
-    func save(_ token: String, mobile: String) {
-        TokenKeychain.save(token, account: "jwt")
-        TokenKeychain.save(mobile, account: "mobile")
+    func save(_ token: String, mobile: String) throws {
+        try TokenKeychain.save(token, account: "jwt")
+        try TokenKeychain.save(mobile, account: "mobile")
         self.token = token
         self.mobile = mobile
     }
