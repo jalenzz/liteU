@@ -30,9 +30,9 @@ struct StoreEntityQuery: EnumerableEntityQuery {
 }
 
 struct SelectStoresIntent: WidgetConfigurationIntent {
-    static var title: LocalizedStringResource { "选择洗衣房" }
+    static var title: LocalizedStringResource { "显示的洗衣房" }
     static var description: IntentDescription {
-        IntentDescription("从 App 已选洗衣房中挑选小组件显示的店，最多 3 家")
+        IntentDescription("从已选洗衣房中挑选，最多 3 家")
     }
 
     @Parameter(title: "第一家")

@@ -49,7 +49,7 @@ enum GeoCoordinate {
 
     static func errorMessage(latitude: String, longitude: String) -> String? {
         guard let lat = Double(latitude), let longitude = Double(longitude) else {
-            return "请填写数字坐标"
+            return "请输入数字坐标"
         }
         if !(-90 ... 90).contains(lat) {
             return "第一格是纬度（-90～90）。成都大约是纬度 30.68、经度 104.09，104 应填在第二格。"

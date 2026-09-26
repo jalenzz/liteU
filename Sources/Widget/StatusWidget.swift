@@ -72,7 +72,7 @@ struct StatusWidgetView: View {
         Group {
             switch visibleStores.count {
             case 0:
-                Text("选择洗衣房后显示空闲")
+                Text("暂无已选洗衣房")
                     .font(.subheadline)
                     .foregroundStyle(.secondary)
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
