@@ -2,13 +2,12 @@ name: LiteU
 options:
   createIntermediateGroups: true
   groupSortPosition: top
+  developmentLanguage: zh-Hans
   deploymentTarget:
     iOS: "17.0"
 settings:
   base:
-    IPHONEOS_DEPLOYMENT_TARGET: "17.0"
-    SWIFT_VERSION: "5.0"
-    SWIFT_STRICT_CONCURRENCY: complete
+    SWIFT_VERSION: "6.0"
     TARGETED_DEVICE_FAMILY: "1,2"
     CURRENT_PROJECT_VERSION: 1
     MARKETING_VERSION: "1.0.0"
@@ -22,9 +21,6 @@ targets:
     sources:
       - path: Sources/Shared
       - path: Sources/App
-    resources:
-      - path: Sources/App/Assets.xcassets
-      - path: Sources/App/PrivacyInfo.xcprivacy
     preBuildScripts:
       - name: Copy captcha HMAC key
         basedOnDependencyAnalysis: false
@@ -42,19 +38,6 @@ targets:
           fi
           mkdir -p "$(dirname "$DST")"
           cp "$SRC" "$DST"
-    info:
-      path: Sources/App/Info.plist
-      properties:
-        CFBundleDisplayName: LiteU
-        UILaunchScreen: {}
-        UIRequiresFullScreen: YES
-        UISupportedInterfaceOrientations:
-          - UIInterfaceOrientationPortrait
-        NSLocationWhenInUseUsageDescription: 用于查找附近洗衣房
-        CFBundleURLTypes:
-          - CFBundleURLName: com.liteu.app
-            CFBundleURLSchemes:
-              - liteu
     entitlements:
       path: Sources/App/LiteU.entitlements
       properties:
@@ -63,16 +46,17 @@ targets:
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: com.liteu.app
-        INFOPLIST_KEY_CFBundleDisplayName: LiteU
         GENERATE_INFOPLIST_FILE: YES
+        INFOPLIST_KEY_CFBundleDisplayName: LiteU
+        INFOPLIST_KEY_NSLocationWhenInUseUsageDescription: 用于查找附近洗衣房
+        INFOPLIST_KEY_UILaunchScreen_Generation: YES
+        INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone: UIInterfaceOrientationPortrait
+        INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad: >-
+          UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown
+          UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight
         ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
-        CODE_SIGN_ENTITLEMENTS: Sources/App/LiteU.entitlements
-        CODE_SIGN_IDENTITY: iPhone Developer
     dependencies:
       - target: LiteUWidget
-        embed: true
-        codeSign: true
-      - sdk: WidgetKit.framework
   LiteUWidget:
     type: app-extension
     platform: iOS
@@ -84,25 +68,16 @@ targets:
       properties:
         com.apple.security.application-groups:
           - group.com.liteu.shared
-    info:
-      path: Sources/Widget/Info.plist
-      properties:
-        CFBundleDisplayName: LiteU
-        NSExtension:
-          NSExtensionPointIdentifier: com.apple.widgetkit-extension
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: com.liteu.app.widget
         GENERATE_INFOPLIST_FILE: YES
-        CODE_SIGN_ENTITLEMENTS: Sources/Widget/LiteUWidget.entitlements
+        INFOPLIST_FILE: Sources/Widget/Info.plist
+        INFOPLIST_KEY_CFBundleDisplayName: LiteU
         LD_RUNPATH_SEARCH_PATHS:
           - $(inherited)
           - "@executable_path/Frameworks"
           - "@executable_path/../../Frameworks"
-    dependencies:
-      - sdk: WidgetKit.framework
-      - sdk: SwiftUI.framework
-      - sdk: AppIntents.framework
   LiteUTests:
     type: bundle.unit-test
     platform: iOS

@@ -87,7 +87,7 @@ struct LoginView: View {
         defer { isLoggingIn = false }
         do {
             let token = try await client.login(mobile, captcha)
-            auth.save(token, mobile: mobile)
+            try auth.save(token, mobile: mobile)
         } catch is CancellationError {
             return
         } catch {
@@ -100,6 +100,5 @@ struct LoginView: View {
     NavigationStack {
         LoginView()
             .environment(AuthStore())
-            .environment(\.ujingClient, .live())
     }
 }

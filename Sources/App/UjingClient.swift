@@ -10,6 +10,7 @@ struct NearbyStore: Equatable, Sendable, Identifiable {
 struct UjingClient: Sendable {
     var sendCaptcha: @Sendable (_ mobile: String) async throws -> Void
     var login: @Sendable (_ mobile: String, _ captcha: String) async throws -> String
+    /// 按 id 去重。
     var nearbyStores: @Sendable (_ lat: Double, _ lont: Double, _ token: String) async throws -> [NearbyStore]
     var machines: @Sendable (_ storeId: String, _ token: String) async throws -> [MachineType]
     var runningOrders: @Sendable (_ token: String) async throws -> [Order]
@@ -52,7 +53,6 @@ extension UjingClient {
     }
 
     static func live(session: URLSession = .shared) -> UjingClient {
-        let cache = WaitCache()
         let transport = UjingTransport(session: session)
         return UjingClient(
             sendCaptcha: { mobile in
@@ -97,23 +97,19 @@ extension UjingClient {
                     ],
                     headers: UjingTransport.queryHeaders(token: token)
                 )
-                return payload.storeList.map { store in
+                var seen = Set<String>()
+                return payload.storeList.filter { seen.insert($0.id).inserted }.map { store in
                     let counts = LaundryMapping.washerCounts(storeInfo: store.storeInfo)
                     return NearbyStore(id: store.id, name: store.name, idle: counts.idle, total: counts.total)
                 }
             },
             machines: { storeId, token in
-                if let cached = await cache.value(for: storeId) {
-                    return cached
-                }
                 let payload: ReserveData = try await transport.get(
                     path: "api/v1/devices/reserve",
                     query: [URLQueryItem(name: "storeId", value: storeId)],
                     headers: UjingTransport.queryHeaders(token: token)
                 )
-                let machines = LaundryMapping.machines(from: payload.devices)
-                await cache.store(machines, for: storeId)
-                return machines
+                return LaundryMapping.machines(from: payload.devices)
             },
             runningOrders: { token in
                 let running: [OrderDTO] = try await transport.get(
@@ -152,19 +148,6 @@ extension UjingClient {
                 return items.map { LaundryMapping.order($0, now: now) }
             }
         )
-    }
-}
-
-actor WaitCache {
-    private var items: [String: (Date, [MachineType])] = [:]
-
-    func value(for id: String) -> [MachineType]? {
-        guard let (at, value) = items[id], Date().timeIntervalSince(at) < 60 else { return nil }
-        return value
-    }
-
-    func store(_ value: [MachineType], for id: String) {
-        items[id] = (Date(), value)
     }
 }
 
@@ -257,7 +240,12 @@ struct UjingTransport: Sendable {
     }
 
     private func decode<T: Decodable>(_ data: Data) throws -> T {
-        let envelope = try JSONDecoder().decode(Envelope<T>.self, from: data)
+        let envelope: Envelope<T>
+        do {
+            envelope = try JSONDecoder().decode(Envelope<T>.self, from: data)
+        } catch {
+            throw UjingError.transport("服务器返回了无法识别的数据")
+        }
         if envelope.code == 401 {
             throw UjingError.unauthorized
         }

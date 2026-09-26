@@ -8,6 +8,7 @@ struct LiteUApp: App {
     @State private var orderStore = OrderStore()
 
     init() {
+        AppSettings.registerDefaults()
         UNUserNotificationCenter.current().delegate = WasherNotification.presenter
     }
 
@@ -17,18 +18,10 @@ struct LiteUApp: App {
                 .environment(auth)
                 .environment(selection)
                 .environment(orderStore)
-                .environment(\.ujingClient, .live())
         }
     }
 }
 
-private struct UjingClientKey: EnvironmentKey {
-    static let defaultValue = UjingClient.live()
-}
-
 extension EnvironmentValues {
-    var ujingClient: UjingClient {
-        get { self[UjingClientKey.self] }
-        set { self[UjingClientKey.self] = newValue }
-    }
+    @Entry var ujingClient = UjingClient.live()
 }

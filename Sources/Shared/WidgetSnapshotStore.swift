@@ -9,4 +9,8 @@ enum WidgetSnapshotStore {
     static func save(_ snapshot: WidgetSnapshot) {
         AppGroup.defaults.set(try! JSONEncoder().encode(snapshot), forKey: AppGroup.snapshotKey)
     }
+
+    static func clear() {
+        AppGroup.defaults.removeObject(forKey: AppGroup.snapshotKey)
+    }
 }

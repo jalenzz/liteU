@@ -13,7 +13,6 @@ struct StatusWidget: Widget {
     var body: some WidgetConfiguration {
         AppIntentConfiguration(kind: "LiteUStatus", intent: SelectStoresIntent.self, provider: StatusProvider()) { entry in
             StatusWidgetView(entry: entry)
-                .widgetURL(URL(string: "liteu://"))
         }
         .configurationDisplayName("LiteU")
         .description("显示已选洗衣房的空闲快照")
@@ -46,21 +45,20 @@ struct StatusProvider: AppIntentTimelineProvider {
     }
 
     private func entry(for configuration: SelectStoresIntent) -> StatusEntry {
-        let snapshot = WidgetSnapshotStore.load()
+        guard let snapshot = WidgetSnapshotStore.load() else {
+            return StatusEntry(date: .now, snapshot: nil)
+        }
         let chosen = configuration.chosenStores
         let stores: [StoreSnapshot]
         if chosen.isEmpty {
-            stores = Array((snapshot?.stores ?? []).prefix(3))
+            stores = Array(snapshot.stores.prefix(3))
         } else {
-            let byID = Dictionary(uniqueKeysWithValues: (snapshot?.stores ?? []).map { ($0.id, $0) })
+            let byID = Dictionary(uniqueKeysWithValues: snapshot.stores.map { ($0.id, $0) })
             stores = chosen.map { entity in
                 byID[entity.id] ?? StoreSnapshot(id: entity.id, name: entity.name, idle: 0, total: 0, waitMinutes: nil)
             }
         }
-        return StatusEntry(
-            date: .now,
-            snapshot: WidgetSnapshot(stores: stores, updatedAt: snapshot?.updatedAt ?? .now)
-        )
+        return StatusEntry(date: .now, snapshot: WidgetSnapshot(stores: stores, updatedAt: snapshot.updatedAt))
     }
 }
 
@@ -70,23 +68,36 @@ struct StatusWidgetView: View {
 
     var body: some View {
         Group {
-            switch visibleStores.count {
-            case 0:
-                Text("暂无已选洗衣房")
+            if let snapshot = entry.snapshot, !visibleStores.isEmpty {
+                VStack(alignment: .leading, spacing: 4) {
+                    switch visibleStores.count {
+                    case 1:
+                        oneStore(visibleStores[0])
+                    case 2:
+                        twoStores(visibleStores)
+                    default:
+                        threeStores(visibleStores)
+                    }
+                    Text("更新于 \(updatedText(snapshot.updatedAt))")
+                        .font(.caption2)
+                        .foregroundStyle(.tertiary)
+                }
+            } else {
+                Text("打开 LiteU 查看空闲")
                     .font(.subheadline)
                     .foregroundStyle(.secondary)
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
-            case 1:
-                oneStore(visibleStores[0])
-            case 2:
-                twoStores(visibleStores)
-            default:
-                threeStores(visibleStores)
             }
         }
         .containerBackground(for: .widget) {
             Color.clear
         }
+    }
+
+    private func updatedText(_ date: Date) -> String {
+        Calendar.current.isDateInToday(date)
+            ? date.formatted(date: .omitted, time: .shortened)
+            : date.formatted(.dateTime.month().day().hour().minute())
     }
 
     private var visibleStores: [StoreSnapshot] {
