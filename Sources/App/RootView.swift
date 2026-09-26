@@ -73,15 +73,11 @@ private struct SettingsView: View {
                 Toggle("烘干机", isOn: $showDryers)
                 Toggle("洗鞋机", isOn: $showShoeWashers)
             }
-            Section {
+            Section("通知") {
                 Toggle("结束前 1 分钟提醒", isOn: $remindBeforeEnd)
                     .onChange(of: remindBeforeEnd) {
                         Task { await orderStore.syncReminders() }
                     }
-            } header: {
-                Text("通知")
-            } footer: {
-                Text("使用中的机器快结束时发本地通知")
             }
             Section {
                 Button("退出登录", role: .destructive) {

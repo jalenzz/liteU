@@ -158,6 +158,12 @@ private struct RunningOrderRow: View {
 }
 
 private struct HistoryOrderRow: View {
+    private static let dateFormat = Date.VerbatimFormatStyle(
+        format: "\(year: .defaultDigits).\(month: .twoDigits).\(day: .twoDigits) \(hour: .twoDigits(clock: .twentyFourHour, hourCycle: .zeroBased)):\(minute: .twoDigits)",
+        timeZone: .current,
+        calendar: Calendar(identifier: .gregorian)
+    )
+
     var order: Order
 
     var body: some View {
@@ -165,7 +171,7 @@ private struct HistoryOrderRow: View {
             VStack(alignment: .leading, spacing: 4) {
                 Text(order.title)
                     .font(.headline)
-                Text([order.storeName, order.createdAt?.formatted(date: .abbreviated, time: .shortened) ?? ""]
+                Text([order.storeName, order.createdAt?.formatted(Self.dateFormat) ?? ""]
                     .filter { !$0.isEmpty }
                     .joined(separator: " · "))
                     .font(.footnote)

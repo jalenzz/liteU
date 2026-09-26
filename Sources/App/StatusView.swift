@@ -41,6 +41,8 @@ struct StatusView: View {
                         Text("更新于 \(updatedAt.formatted(date: .omitted, time: .shortened))")
                             .font(.footnote)
                             .foregroundStyle(.secondary)
+                            .frame(maxWidth: .infinity)
+                            .listRowBackground(Color.clear)
                     }
                 }
                 .refreshable { await load() }
