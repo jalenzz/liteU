@@ -5,6 +5,11 @@ enum AppSettings {
     static let showDryers = "showDryers"
     static let showShoeWashers = "showShoeWashers"
     static let remindBeforeEnd = "remindBeforeEnd"
+
+    /// `@AppStorage` 声明处的默认值须与这里一致。
+    static func registerDefaults() {
+        UserDefaults.standard.register(defaults: [showDryers: true, showShoeWashers: true, remindBeforeEnd: true])
+    }
 }
 
 @MainActor
@@ -25,7 +30,7 @@ final class OrderStore {
     }
 
     func syncReminders() async {
-        let enabled = UserDefaults.standard.object(forKey: AppSettings.remindBeforeEnd) as? Bool ?? true
+        let enabled = UserDefaults.standard.bool(forKey: AppSettings.remindBeforeEnd)
         notificationStatus = await WasherNotification.authorizationStatus()
         let authorized = [.authorized, .provisional, .ephemeral].contains(notificationStatus)
         do {
@@ -86,7 +91,7 @@ struct OrdersView: View {
                     HistoryOrderRow(order: order)
                         .onAppear {
                             if order.id == history.last?.id {
-                                Task { await loadHistory() }
+                                Task { await loadMore() }
                             }
                         }
                 }
@@ -136,11 +141,14 @@ struct OrdersView: View {
 
     private func reload() async {
         let token = auth.token!
-        nextPage = 1
-        hasMore = true
         async let running: Void = refreshRunning(token: token)
-        await loadHistory()
+        await loadHistory(page: 1)
         await running
+    }
+
+    private func loadMore() async {
+        guard hasMore, !isLoadingHistory else { return }
+        await loadHistory(page: nextPage)
     }
 
     private func refreshRunning(token: String) async {
@@ -151,9 +159,8 @@ struct OrdersView: View {
         }
     }
 
-    private func loadHistory() async {
-        guard hasMore, !isLoadingHistory, let token = auth.token else { return }
-        let page = nextPage
+    private func loadHistory(page: Int) async {
+        guard let token = auth.token else { return }
         isLoadingHistory = true
         defer { isLoadingHistory = false }
         do {
@@ -195,12 +202,6 @@ private struct RunningOrderRow: View {
 }
 
 private struct HistoryOrderRow: View {
-    private static let dateFormat = Date.VerbatimFormatStyle(
-        format: "\(year: .defaultDigits).\(month: .twoDigits).\(day: .twoDigits) \(hour: .twoDigits(clock: .twentyFourHour, hourCycle: .zeroBased)):\(minute: .twoDigits)",
-        timeZone: .current,
-        calendar: Calendar(identifier: .gregorian)
-    )
-
     var order: Order
 
     var body: some View {
@@ -208,7 +209,7 @@ private struct HistoryOrderRow: View {
             VStack(alignment: .leading, spacing: 4) {
                 Text(order.title)
                     .font(.headline)
-                Text([order.storeName, order.createdAt?.formatted(Self.dateFormat) ?? ""]
+                Text([order.storeName, order.createdAt?.formatted(.dateTime.year().month().day().hour().minute()) ?? ""]
                     .filter { !$0.isEmpty }
                     .joined(separator: " · "))
                     .font(.footnote)

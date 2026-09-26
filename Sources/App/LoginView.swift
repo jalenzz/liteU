@@ -100,6 +100,5 @@ struct LoginView: View {
     NavigationStack {
         LoginView()
             .environment(AuthStore())
-            .environment(\.ujingClient, .live())
     }
 }
