@@ -36,9 +36,6 @@ struct StatusView: View {
         }
         .navigationTitle("洗衣机")
         .toolbar {
-            ToolbarItem(placement: .topBarLeading) {
-                Button("退出") { auth.clear() }
-            }
             ToolbarItem(placement: .topBarTrailing) {
                 Button("选择") { pickingStores = true }
             }
