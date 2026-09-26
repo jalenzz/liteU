@@ -87,7 +87,7 @@ struct LoginView: View {
         defer { isLoggingIn = false }
         do {
             let token = try await client.login(mobile, captcha)
-            auth.save(token)
+            auth.save(token, mobile: mobile)
         } catch is CancellationError {
             return
         } catch {
