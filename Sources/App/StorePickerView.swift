@@ -59,7 +59,7 @@ struct StorePickerView: View {
                         HStack {
                             VStack(alignment: .leading) {
                                 Text(store.name)
-                                    .foregroundStyle(.primary)
+                                    .foregroundStyle(isSelected ? Color.accentColor : Color.primary)
                                 if nearbyIDs.contains(store.id) {
                                     Text("洗衣机空闲 \(store.idle) / \(store.total)")
                                         .font(.footnote)
@@ -69,10 +69,11 @@ struct StorePickerView: View {
                             Spacer()
                             if isSelected {
                                 Image(systemName: "checkmark")
-                                    .foregroundStyle(.tint)
+                                    .foregroundStyle(Color.accentColor)
                             }
                         }
                     }
+                    .buttonStyle(.plain)
                     .accessibilityAddTraits(isSelected ? .isSelected : [])
                 }
             }
