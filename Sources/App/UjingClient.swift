@@ -30,7 +30,15 @@ extension UjingClient {
             for (index, store) in selected.enumerated() {
                 group.addTask {
                     let near = byID[store.id]
-                    let machines = near == nil ? [] : try await self.machines(store.id, token)
+                    var machines: [MachineType] = []
+                    var machinesFailed = false
+                    if near != nil {
+                        do {
+                            machines = try await self.machines(store.id, token)
+                        } catch let error as UjingError where !error.isUnauthorized {
+                            machinesFailed = true
+                        }
+                    }
                     return (
                         index,
                         StoreStatus(
@@ -39,7 +47,8 @@ extension UjingClient {
                             idle: near?.idle ?? 0,
                             total: near?.total ?? 0,
                             machines: machines,
-                            found: near != nil
+                            found: near != nil,
+                            machinesFailed: machinesFailed
                         )
                     )
                 }

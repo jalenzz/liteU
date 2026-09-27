@@ -255,6 +255,52 @@ struct DecodingTests {
         #expect(statuses[2].found == false)
         #expect(statuses[2].kinds.isEmpty)
     }
+
+    @Test func loadStatusesKeepsOtherStoresWhenMachinesFail() async throws {
+        let client = UjingClient(
+            sendCaptcha: { _ in },
+            login: { _, _ in "" },
+            nearbyStores: { _, _, _ in
+                [
+                    NearbyStore(id: "a", name: "坏", idle: 1, total: 4),
+                    NearbyStore(id: "b", name: "好", idle: 3, total: 3),
+                ]
+            },
+            machines: { storeId, _ in
+                if storeId == "a" { throw UjingError.transport("超时") }
+                return []
+            },
+            runningOrders: { _ in [] },
+            historyOrders: { _, _, _ in [] }
+        )
+        let statuses = try await client.loadStatuses(
+            selected: [SelectedStore(id: "a", name: "坏"), SelectedStore(id: "b", name: "好")],
+            latitude: 1,
+            longitude: 2,
+            token: "t"
+        )
+        #expect(statuses.map(\.machinesFailed) == [true, false])
+        #expect(statuses[0].kinds.map(\.kind) == [.washer])
+    }
+
+    @Test func loadStatusesPropagatesUnauthorized() async {
+        let client = UjingClient(
+            sendCaptcha: { _ in },
+            login: { _, _ in "" },
+            nearbyStores: { _, _, _ in [NearbyStore(id: "a", name: "店", idle: 1, total: 4)] },
+            machines: { _, _ in throw UjingError.unauthorized },
+            runningOrders: { _ in [] },
+            historyOrders: { _, _, _ in [] }
+        )
+        await #expect(throws: UjingError.unauthorized) {
+            try await client.loadStatuses(
+                selected: [SelectedStore(id: "a", name: "店")],
+                latitude: 1,
+                longitude: 2,
+                token: "t"
+            )
+        }
+    }
 }
 
 private struct EnvelopeProbe: Decodable {

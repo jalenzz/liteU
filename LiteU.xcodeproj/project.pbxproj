@@ -11,6 +11,7 @@
 		191484ED814845D66C18FDA3 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DED59E758A59301E4589B373 /* LoginView.swift */; };
 		2677DCF2DB6A6BD8F0E73E19 /* WasherNotifyTiming.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6182511A2F462BCCF188108A /* WasherNotifyTiming.swift */; };
 		2E04AAE8D0857A21F139AA01 /* LiteUWidget.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = B9BBF113F4E42BC4766588DE /* LiteUWidget.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		4147403680BBA965676C4CCB /* ErrorAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAD88C4923C1A0C12B45A0AB /* ErrorAlert.swift */; };
 		4448439D035A8BF88A731D10 /* OrdersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DEA15E659FAE4EFF960263F /* OrdersView.swift */; };
 		5FDDDBCF74E339EFA3B70C1B /* Models.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F1009EB22F9EB2F4DE463EC /* Models.swift */; };
 		6470E867D82542F2C3BA6DF8 /* StatusWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2363B9BF13CF134CA251DB45 /* StatusWidget.swift */; };
@@ -96,6 +97,7 @@
 		DE709AA5EFDBFCA88F537A55 /* StorePickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorePickerView.swift; sourceTree = "<group>"; };
 		DED59E758A59301E4589B373 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		E3618F80B822525351C87657 /* TokenKeychain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenKeychain.swift; sourceTree = "<group>"; };
+		EAD88C4923C1A0C12B45A0AB /* ErrorAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorAlert.swift; sourceTree = "<group>"; };
 		EC0C7F8B5EFE26FB74D52A4B /* StatusView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusView.swift; sourceTree = "<group>"; };
 		EFD3B3CF8A0574B3758CFE85 /* UjingError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UjingError.swift; sourceTree = "<group>"; };
 		F0819682DF85D163BA1DC941 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
@@ -168,6 +170,7 @@
 				1FAE80E145DAA8FFAE25066A /* Assets.xcassets */,
 				157293A6F7353AC092097D22 /* AuthStore.swift */,
 				B614354EA0481F2F55A9E2AE /* CaptchaSignature.swift */,
+				EAD88C4923C1A0C12B45A0AB /* ErrorAlert.swift */,
 				76313A70857F5C3E6A960B7F /* LiteU.entitlements */,
 				67933EB9D56C95E9CF9E3937 /* LiteUApp.swift */,
 				9C5956D3DA7E35D9570A84E1 /* LocationProvider.swift */,
@@ -254,7 +257,7 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = YES;
-				LastUpgradeCheck = 1430;
+				LastUpgradeCheck = 2700;
 				TargetAttributes = {
 					271B003DD5E4AA8B2641E0A1 = {
 						DevelopmentTeam = UD7BN8R7P2;
@@ -363,6 +366,7 @@
 				7B160EB3EB8873C7B1820FB3 /* AppGroup.swift in Sources */,
 				73DAA3A0D9E278CAA8AF3C14 /* AuthStore.swift in Sources */,
 				91F5FC06BFDD28914BD8F9FD /* CaptchaSignature.swift in Sources */,
+				4147403680BBA965676C4CCB /* ErrorAlert.swift in Sources */,
 				E343D1718EF45B1405FC83BC /* LiteUApp.swift in Sources */,
 				ECDD0850EE576E9AA643C50F /* LocationProvider.swift in Sources */,
 				191484ED814845D66C18FDA3 /* LoginView.swift in Sources */,
@@ -475,6 +479,7 @@
 				MTL_FAST_MATH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				SWIFT_VERSION = 6.0;
@@ -561,6 +566,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 6.0;

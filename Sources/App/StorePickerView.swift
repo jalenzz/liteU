@@ -16,8 +16,7 @@ struct StorePickerView: View {
     @State private var selectedIDs: Set<String> = []
     @State private var isLoading = false
     @State private var errorMessage: String?
-    @State private var searchLatitude: Double?
-    @State private var searchLongitude: Double?
+    @State private var searchCoordinate: (latitude: Double, longitude: Double)?
 
     var body: some View {
         List {
@@ -48,6 +47,7 @@ struct StorePickerView: View {
             }
 
             Section("附近洗衣房") {
+                let nearbyIDs = Set(nearby.map(\.id))
                 if isLoading && displayedStores.isEmpty {
                     ProgressView()
                 }
@@ -87,24 +87,16 @@ struct StorePickerView: View {
             }
             ToolbarItem(placement: .confirmationAction) {
                 Button("完成") { save() }
-                    .disabled(selectedIDs.isEmpty || searchLatitude == nil)
+                    .disabled(selectedIDs.isEmpty || searchCoordinate == nil)
             }
         }
-        .alert("无法加载附近洗衣房", isPresented: Binding(
-            get: { errorMessage != nil },
-            set: { if !$0 { errorMessage = nil } }
-        )) {
-            Button("好", role: .cancel) {}
-        } message: {
-            Text(errorMessage ?? "")
-        }
+        .errorAlert("无法加载附近洗衣房", message: $errorMessage)
         .task {
             selectedIDs = Set(selection.stores.map(\.id))
             if let saved = selection.selection {
                 latText = String(saved.latitude)
                 lontText = String(saved.longitude)
-                searchLatitude = saved.latitude
-                searchLongitude = saved.longitude
+                searchCoordinate = (saved.latitude, saved.longitude)
                 await search()
             }
         }
@@ -117,16 +109,9 @@ struct StorePickerView: View {
     /// 已保存的店按保存顺序在前，其余附近店按距离顺序在后。
     private var displayedStores: [NearbyStore] {
         let byID = Dictionary(uniqueKeysWithValues: nearby.map { ($0.id, $0) })
+        let savedIDs = Set(selection.stores.map(\.id))
         let saved = selection.stores.map { byID[$0.id] ?? NearbyStore(id: $0.id, name: $0.name, idle: 0, total: 0) }
         return saved + nearby.filter { !savedIDs.contains($0.id) }
-    }
-
-    private var nearbyIDs: Set<String> {
-        Set(nearby.map(\.id))
-    }
-
-    private var savedIDs: Set<String> {
-        Set(selection.stores.map(\.id))
     }
 
     private func applyLocation() {
@@ -152,14 +137,9 @@ struct StorePickerView: View {
         defer { isLoading = false }
         do {
             nearby = try await client.nearbyStores(pair.0, pair.1, auth.token!)
-            searchLatitude = pair.0
-            searchLongitude = pair.1
-        } catch is CancellationError {
-            return
-        } catch let error as UjingError where error.isUnauthorized {
-            auth.clear()
+            searchCoordinate = pair
         } catch {
-            errorMessage = error.localizedDescription
+            errorMessage = auth.message(for: error)
         }
     }
 
@@ -167,7 +147,8 @@ struct StorePickerView: View {
         let stores = displayedStores
             .filter { selectedIDs.contains($0.id) }
             .map { SelectedStore(id: $0.id, name: $0.name) }
-        selection.save(PersistedSelection(stores: stores, latitude: searchLatitude!, longitude: searchLongitude!))
+        let coordinate = searchCoordinate!
+        selection.save(PersistedSelection(stores: stores, latitude: coordinate.latitude, longitude: coordinate.longitude))
         WidgetCenter.shared.reloadAllTimelines()
         dismiss()
     }

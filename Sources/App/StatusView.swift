@@ -6,6 +6,7 @@ struct StatusView: View {
     @Environment(StoreSelectionStore.self) private var selection
     @Environment(OrderStore.self) private var orderStore
     @Environment(\.ujingClient) private var client
+    @Environment(\.scenePhase) private var scenePhase
     @AppStorage(AppSettings.showDryers) private var showDryers = true
     @AppStorage(AppSettings.showShoeWashers) private var showShoeWashers = true
 
@@ -27,6 +28,9 @@ struct StatusView: View {
                         Section(store.name) {
                             if !store.found {
                                 Text("暂时查不到这家洗衣房")
+                                    .foregroundStyle(.secondary)
+                            } else if store.machinesFailed {
+                                Text("机器详情加载失败，下拉重试")
                                     .foregroundStyle(.secondary)
                             }
                             ForEach(store.kinds.filter { isVisible($0.kind) }) { kind in
@@ -59,26 +63,17 @@ struct StatusView: View {
                 StorePickerView(showsLogout: false)
             }
         }
-        .alert("查询失败", isPresented: Binding(
-            get: { errorMessage != nil },
-            set: { if !$0 { errorMessage = nil } }
-        )) {
-            Button("好", role: .cancel) {}
-        } message: {
-            Text(errorMessage ?? "")
-        }
-        .alert("通知", isPresented: Binding(
-            get: { notifyMessage != nil },
-            set: { if !$0 { notifyMessage = nil } }
-        )) {
-            Button("好", role: .cancel) {}
-        } message: {
-            Text(notifyMessage ?? "")
-        }
-        .task(id: selection.stores.map(\.id).joined(separator: ",")) {
+        .errorAlert("查询失败", message: $errorMessage)
+        .errorAlert("通知", message: $notifyMessage)
+        .task(id: ReloadKey(storeIDs: selection.stores.map(\.id), isActive: scenePhase == .active)) {
+            guard scenePhase == .active else { return }
             await load()
-            notifyKeys = await WasherNotification.pendingKeys()
         }
+    }
+
+    private struct ReloadKey: Equatable {
+        var storeIDs: [String]
+        var isActive: Bool
     }
 
     private func isVisible(_ kind: MachineKind) -> Bool {
@@ -90,36 +85,30 @@ struct StatusView: View {
     }
 
     private func load() async {
-        let token = auth.token!
         isLoading = true
         defer { isLoading = false }
-        async let running: Void = refreshRunning(token: token)
-        await loadStatuses(token: token)
-        await running
+        async let runningError = orderStore.refreshRunning(client: client, auth: auth)
+        await loadStatuses()
+        if let message = await runningError {
+            errorMessage = message
+        }
+        notifyKeys = await WasherNotification.pendingKeys()
     }
 
-    private func loadStatuses(token: String) async {
+    private func loadStatuses() async {
         let saved = selection.selection!
         do {
             let result = try await client.loadStatuses(
                 selected: saved.stores,
                 latitude: saved.latitude,
                 longitude: saved.longitude,
-                token: token
+                token: auth.token!
             )
             statuses = result
             let now = Date()
             updatedAt = now
             WidgetSnapshotStore.save(LaundryMapping.snapshot(from: result, updatedAt: now))
             WidgetCenter.shared.reloadAllTimelines()
-        } catch {
-            errorMessage = auth.message(for: error)
-        }
-    }
-
-    private func refreshRunning(token: String) async {
-        do {
-            try await orderStore.refreshRunning(client: client, token: token)
         } catch {
             errorMessage = auth.message(for: error)
         }

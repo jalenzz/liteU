@@ -19,9 +19,15 @@ final class OrderStore {
     private(set) var reminderError: String?
     private(set) var notificationStatus: UNAuthorizationStatus = .notDetermined
 
-    func refreshRunning(client: UjingClient, token: String) async throws {
-        running = try await client.runningOrders(token)
+    /// 返回需要提示给用户的错误文案，见 `AuthStore.message(for:)`。
+    func refreshRunning(client: UjingClient, auth: AuthStore) async -> String? {
+        do {
+            running = try await client.runningOrders(auth.token!)
+        } catch {
+            return auth.message(for: error)
+        }
         await syncReminders()
+        return nil
     }
 
     func reset() async {
@@ -62,6 +68,7 @@ struct OrdersView: View {
     @State private var nextPage = 1
     @State private var hasMore = true
     @State private var isLoadingHistory = false
+    @State private var historyRequest = 0
     @State private var errorMessage: String?
 
     var body: some View {
@@ -103,20 +110,11 @@ struct OrdersView: View {
         }
         .navigationTitle("订单")
         .refreshable { await reload() }
-        .task { await reload() }
-        .onChange(of: scenePhase) { _, phase in
-            if phase == .active {
-                Task { await orderStore.syncReminders() }
-            }
+        .task(id: scenePhase == .active) {
+            guard scenePhase == .active else { return }
+            await reload()
         }
-        .alert("查询失败", isPresented: Binding(
-            get: { errorMessage != nil },
-            set: { if !$0 { errorMessage = nil } }
-        )) {
-            Button("好", role: .cancel) {}
-        } message: {
-            Text(errorMessage ?? "")
-        }
+        .errorAlert("查询失败", message: $errorMessage)
     }
 
     @ViewBuilder
@@ -140,10 +138,11 @@ struct OrdersView: View {
     }
 
     private func reload() async {
-        let token = auth.token!
-        async let running: Void = refreshRunning(token: token)
+        async let runningError = orderStore.refreshRunning(client: client, auth: auth)
         await loadHistory(page: 1)
-        await running
+        if let message = await runningError {
+            errorMessage = message
+        }
     }
 
     private func loadMore() async {
@@ -151,24 +150,22 @@ struct OrdersView: View {
         await loadHistory(page: nextPage)
     }
 
-    private func refreshRunning(token: String) async {
-        do {
-            try await orderStore.refreshRunning(client: client, token: token)
-        } catch {
-            errorMessage = auth.message(for: error)
-        }
-    }
-
+    /// 只有最后一次发起的请求能写入结果，避免下拉刷新和翻页交错返回时拼错列表。
     private func loadHistory(page: Int) async {
-        guard let token = auth.token else { return }
+        historyRequest += 1
+        let request = historyRequest
         isLoadingHistory = true
-        defer { isLoadingHistory = false }
+        defer {
+            if request == historyRequest { isLoadingHistory = false }
+        }
         do {
-            let items = try await client.historyOrders(page, Self.pageSize, token)
+            let items = try await client.historyOrders(page, Self.pageSize, auth.token!)
+            guard request == historyRequest else { return }
             history = page == 1 ? items : history + items
             nextPage = page + 1
             hasMore = items.count == Self.pageSize
         } catch {
+            guard request == historyRequest else { return }
             errorMessage = auth.message(for: error)
         }
     }

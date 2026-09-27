@@ -46,14 +46,7 @@ struct LoginView: View {
             }
         }
         .navigationTitle("登录 U 净")
-        .alert("无法登录", isPresented: Binding(
-            get: { errorMessage != nil },
-            set: { if !$0 { errorMessage = nil } }
-        )) {
-            Button("好", role: .cancel) {}
-        } message: {
-            Text(errorMessage ?? "")
-        }
+        .errorAlert("无法登录", message: $errorMessage)
         .onAppear { focused = .mobile }
         .task(id: cooldown) {
             guard cooldown > 0 else { return }

@@ -65,6 +65,7 @@ private struct MainTabView: View {
 
 private struct SettingsView: View {
     @Environment(AuthStore.self) private var auth
+    @Environment(StoreSelectionStore.self) private var selection
     @Environment(OrderStore.self) private var orderStore
     @AppStorage(AppSettings.showDryers) private var showDryers = true
     @AppStorage(AppSettings.showShoeWashers) private var showShoeWashers = true
@@ -87,6 +88,7 @@ private struct SettingsView: View {
             }
             Section {
                 Button("退出登录", role: .destructive) {
+                    selection.clearStores()
                     auth.clear()
                 }
             }

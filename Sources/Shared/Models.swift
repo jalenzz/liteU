@@ -48,6 +48,7 @@ struct StoreStatus: Equatable, Sendable, Identifiable {
     var total: Int
     var machines: [MachineType]
     var found: Bool
+    var machinesFailed: Bool
 
     var kinds: [KindStatus] {
         LaundryMapping.kinds(washerIdle: idle, washerTotal: total, machines: machines)

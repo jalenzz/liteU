@@ -41,7 +41,10 @@ struct StatusProvider: AppIntentTimelineProvider {
     }
 
     func timeline(for configuration: SelectStoresIntent, in context: Context) async -> Timeline<StatusEntry> {
-        Timeline(entries: [entry(for: configuration)], policy: .after(.now.addingTimeInterval(15 * 60)))
+        // 快照只由 App 写入并触发 reload；这里只需跨天重绘，让「更新于」带上日期。
+        let calendar = Calendar.current
+        let tomorrow = calendar.date(byAdding: .day, value: 1, to: calendar.startOfDay(for: .now))!
+        return Timeline(entries: [entry(for: configuration)], policy: .after(tomorrow))
     }
 
     private func entry(for configuration: SelectStoresIntent) -> StatusEntry {
@@ -111,14 +114,11 @@ struct StatusWidgetView: View {
                 .foregroundStyle(.secondary)
                 .lineLimit(1)
             Spacer(minLength: 8)
-            HStack(alignment: .firstTextBaseline, spacing: 2) {
-                Text("\(store.idle)")
-                    .font(.system(size: family == .systemMedium ? 52 : 44, weight: .semibold, design: .rounded))
-                    .foregroundStyle(idleColor(store))
-                Text("/\(store.total)")
-                    .font(.title3.weight(.medium))
-                    .foregroundStyle(.tertiary)
-            }
+            counts(
+                store,
+                idleFont: .system(size: family == .systemMedium ? 52 : 44, weight: .semibold, design: .rounded),
+                totalFont: .title3.weight(.medium)
+            )
             Text(detail(store))
                 .font(.caption)
                 .foregroundStyle(.secondary)
@@ -173,12 +173,7 @@ struct StatusWidgetView: View {
                 .lineLimit(1)
                 .minimumScaleFactor(0.75)
             HStack(alignment: .firstTextBaseline, spacing: 2) {
-                Text("\(store.idle)")
-                    .font(.body.weight(.semibold).monospacedDigit())
-                    .foregroundStyle(idleColor(store))
-                Text("/\(store.total)")
-                    .font(.caption.monospacedDigit())
-                    .foregroundStyle(.tertiary)
+                counts(store, idleFont: .body.weight(.semibold).monospacedDigit(), totalFont: .caption.monospacedDigit())
                 Spacer(minLength: 4)
                 if let wait = store.waitMinutes {
                     Text("\(wait)分")
@@ -197,14 +192,11 @@ struct StatusWidgetView: View {
                 .foregroundStyle(.secondary)
                 .lineLimit(2)
             Spacer(minLength: 8)
-            HStack(alignment: .firstTextBaseline, spacing: 2) {
-                Text("\(store.idle)")
-                    .font(.system(size: 36, weight: .semibold, design: .rounded))
-                    .foregroundStyle(idleColor(store))
-                Text("/\(store.total)")
-                    .font(.subheadline.weight(.medium))
-                    .foregroundStyle(.tertiary)
-            }
+            counts(
+                store,
+                idleFont: .system(size: 36, weight: .semibold, design: .rounded),
+                totalFont: .subheadline.weight(.medium)
+            )
             Text(detail(store))
                 .font(.caption2)
                 .foregroundStyle(.secondary)
@@ -219,12 +211,7 @@ struct StatusWidgetView: View {
                 .font(.subheadline.weight(.medium))
                 .lineLimit(1)
             Spacer(minLength: 6)
-            Text("\(store.idle)")
-                .font(.body.weight(.semibold).monospacedDigit())
-                .foregroundStyle(idleColor(store))
-            Text("/\(store.total)")
-                .font(.subheadline.monospacedDigit())
-                .foregroundStyle(.tertiary)
+            counts(store, idleFont: .body.weight(.semibold).monospacedDigit(), totalFont: .subheadline.monospacedDigit())
             if let wait = store.waitMinutes {
                 Text("\(wait)分")
                     .font(.caption.monospacedDigit())
@@ -233,11 +220,28 @@ struct StatusWidgetView: View {
         }
     }
 
-    private func idleColor(_ store: StoreSnapshot) -> Color {
-        store.idle == 0 ? .orange : .primary
+    /// `total == 0` 表示快照里没有这家店的洗衣机数据，不显示为 0/0。
+    private func counts(_ store: StoreSnapshot, idleFont: Font, totalFont: Font) -> some View {
+        HStack(alignment: .firstTextBaseline, spacing: 2) {
+            if store.total > 0 {
+                Text("\(store.idle)")
+                    .font(idleFont)
+                    .foregroundStyle(store.idle == 0 ? Color.orange : Color.primary)
+                Text("/\(store.total)")
+                    .font(totalFont)
+                    .foregroundStyle(.tertiary)
+            } else {
+                Text("—")
+                    .font(idleFont)
+                    .foregroundStyle(.tertiary)
+            }
+        }
     }
 
     private func detail(_ store: StoreSnapshot) -> String {
+        if store.total == 0 {
+            return "暂无数据"
+        }
         if let wait = store.waitMinutes {
             return "最短等待 \(wait) 分钟"
         }
