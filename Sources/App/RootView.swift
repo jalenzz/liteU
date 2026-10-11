@@ -47,15 +47,21 @@ private struct MainTabView: View {
     @Environment(OrderStore.self) private var orderStore
     @Environment(\.ujingClient) private var client
     @Environment(\.scenePhase) private var scenePhase
+    @State private var tab = Tab.status
+
+    private enum Tab {
+        case status, orders, settings
+    }
 
     var body: some View {
-        TabView {
+        TabView(selection: $tab) {
             NavigationStack {
                 StatusView()
             }
             .tabItem {
                 Label("洗衣房", systemImage: "washer")
             }
+            .tag(Tab.status)
 
             NavigationStack {
                 OrdersView()
@@ -64,12 +70,19 @@ private struct MainTabView: View {
                 Label("订单", systemImage: "receipt")
             }
             .badge(orderStore.running.count)
+            .tag(Tab.orders)
 
             NavigationStack {
                 SettingsView()
             }
             .tabItem {
                 Label("设置", systemImage: "gearshape")
+            }
+            .tag(Tab.settings)
+        }
+        .onOpenURL { url in
+            if url == OrderActivityAttributes.ordersURL {
+                tab = .orders
             }
         }
         .task(id: scenePhase == .active) {

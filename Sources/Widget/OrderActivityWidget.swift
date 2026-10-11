@@ -8,6 +8,7 @@ struct OrderActivityWidget: Widget {
             OrderLockScreenView(context: context)
                 .activityBackgroundTint(.black.opacity(0.82))
                 .activitySystemActionForegroundColor(context.attributes.kind.tint)
+                .widgetURL(OrderActivityAttributes.ordersURL)
         } dynamicIsland: { context in
             let kind = context.attributes.kind
             let endsAt = context.state.endsAt
@@ -72,6 +73,7 @@ struct OrderActivityWidget: Widget {
                     .foregroundStyle(kind.tint)
             }
             .keylineTint(kind.tint)
+            .widgetURL(OrderActivityAttributes.ordersURL)
         }
     }
 }
