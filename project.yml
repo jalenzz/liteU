@@ -49,8 +49,10 @@ targets:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: com.liteu.app
         GENERATE_INFOPLIST_FILE: YES
+        INFOPLIST_FILE: Sources/App/Info.plist
         INFOPLIST_KEY_CFBundleDisplayName: LiteU
         INFOPLIST_KEY_NSLocationWhenInUseUsageDescription: 用于查找附近洗衣房
+        INFOPLIST_KEY_NSSupportsLiveActivities: YES
         INFOPLIST_KEY_UILaunchScreen_Generation: YES
         INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone: UIInterfaceOrientationPortrait
         INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad: >-

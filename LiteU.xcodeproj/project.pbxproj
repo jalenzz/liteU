@@ -10,6 +10,8 @@
 		08E823F3364FA0269F08D8C1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1FAE80E145DAA8FFAE25066A /* Assets.xcassets */; };
 		191484ED814845D66C18FDA3 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DED59E758A59301E4589B373 /* LoginView.swift */; };
 		2677DCF2DB6A6BD8F0E73E19 /* WasherNotifyTiming.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6182511A2F462BCCF188108A /* WasherNotifyTiming.swift */; };
+		28955A08547AC5C948CDDBEE /* OrderActivityWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AE17C3BEC77DE535315A6E6 /* OrderActivityWidget.swift */; };
+		2BEB84886F3C15E894949380 /* OrderActivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EB205060442A94D0E850AB9 /* OrderActivity.swift */; };
 		2E04AAE8D0857A21F139AA01 /* LiteUWidget.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = B9BBF113F4E42BC4766588DE /* LiteUWidget.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		4147403680BBA965676C4CCB /* ErrorAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAD88C4923C1A0C12B45A0AB /* ErrorAlert.swift */; };
 		4448439D035A8BF88A731D10 /* OrdersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DEA15E659FAE4EFF960263F /* OrdersView.swift */; };
@@ -20,6 +22,7 @@
 		7B160EB3EB8873C7B1820FB3 /* AppGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 043F573BAB9F76C56887C672 /* AppGroup.swift */; };
 		7F9B9B61915CA7250613F9F9 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = B48114A75FE411E7F87B594E /* PrivacyInfo.xcprivacy */; };
 		90CF3EDE1BF28099B3063052 /* LiteUTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1FD14FB31C4B60651B97037 /* LiteUTests.swift */; };
+		912ECA0A2773678C2B5BD62D /* OrderActivityAttributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 504B889ED0186ABC4A69F446 /* OrderActivityAttributes.swift */; };
 		91F5FC06BFDD28914BD8F9FD /* CaptchaSignature.swift in Sources */ = {isa = PBXBuildFile; fileRef = B614354EA0481F2F55A9E2AE /* CaptchaSignature.swift */; };
 		996CF8C9383E5C1822EC7B73 /* WidgetSnapshotStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CC099D0A6BED1B17CBF0104 /* WidgetSnapshotStore.swift */; };
 		9BE20F9D36768CCB65D3FCEA /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = F0819682DF85D163BA1DC941 /* PrivacyInfo.xcprivacy */; };
@@ -35,6 +38,7 @@
 		E343D1718EF45B1405FC83BC /* LiteUApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67933EB9D56C95E9CF9E3937 /* LiteUApp.swift */; };
 		E858B16F2C07A693C1AF0F3C /* StoreWidgetIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B0CFDE4C38FA62F2F140398 /* StoreWidgetIntent.swift */; };
 		ECDD0850EE576E9AA643C50F /* LocationProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C5956D3DA7E35D9570A84E1 /* LocationProvider.swift */; };
+		F5259A802DC0FCDF3A365F77 /* OrderActivityAttributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 504B889ED0186ABC4A69F446 /* OrderActivityAttributes.swift */; };
 		FA98688DF9C050CA2A9E8B14 /* WasherNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = A77D7B2B1BBBB56C611A5462 /* WasherNotification.swift */; };
 		FD83000D5E7D94B6992D34ED /* StatusView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC0C7F8B5EFE26FB74D52A4B /* StatusView.swift */; };
 /* End PBXBuildFile section */
@@ -76,13 +80,17 @@
 		157293A6F7353AC092097D22 /* AuthStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthStore.swift; sourceTree = "<group>"; };
 		1FAE80E145DAA8FFAE25066A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		2363B9BF13CF134CA251DB45 /* StatusWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusWidget.swift; sourceTree = "<group>"; };
+		29D2E4AA10B0A0B9F7AD01A4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		40479827A2D2E46BCE986A2E /* StoreSelectionStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreSelectionStore.swift; sourceTree = "<group>"; };
 		47997A6A69F6BE76A8DE6F47 /* LiteU.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = LiteU.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		47AAC8DFF9109F1FB51F4872 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		4B0CFDE4C38FA62F2F140398 /* StoreWidgetIntent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreWidgetIntent.swift; sourceTree = "<group>"; };
+		504B889ED0186ABC4A69F446 /* OrderActivityAttributes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderActivityAttributes.swift; sourceTree = "<group>"; };
 		5B60EC89E787D930D13F40CC /* LiteUTests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = LiteUTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		5EB205060442A94D0E850AB9 /* OrderActivity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderActivity.swift; sourceTree = "<group>"; };
 		6182511A2F462BCCF188108A /* WasherNotifyTiming.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WasherNotifyTiming.swift; sourceTree = "<group>"; };
 		67933EB9D56C95E9CF9E3937 /* LiteUApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiteUApp.swift; sourceTree = "<group>"; };
+		6AE17C3BEC77DE535315A6E6 /* OrderActivityWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderActivityWidget.swift; sourceTree = "<group>"; };
 		76313A70857F5C3E6A960B7F /* LiteU.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = LiteU.entitlements; sourceTree = "<group>"; };
 		789ADC83610BE6617833A734 /* LiteUWidget.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = LiteUWidget.entitlements; sourceTree = "<group>"; };
 		7CC099D0A6BED1B17CBF0104 /* WidgetSnapshotStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetSnapshotStore.swift; sourceTree = "<group>"; };
@@ -120,6 +128,7 @@
 			children = (
 				47AAC8DFF9109F1FB51F4872 /* Info.plist */,
 				789ADC83610BE6617833A734 /* LiteUWidget.entitlements */,
+				6AE17C3BEC77DE535315A6E6 /* OrderActivityWidget.swift */,
 				F0819682DF85D163BA1DC941 /* PrivacyInfo.xcprivacy */,
 				2363B9BF13CF134CA251DB45 /* StatusWidget.swift */,
 			);
@@ -140,6 +149,7 @@
 			children = (
 				043F573BAB9F76C56887C672 /* AppGroup.swift */,
 				8F1009EB22F9EB2F4DE463EC /* Models.swift */,
+				504B889ED0186ABC4A69F446 /* OrderActivityAttributes.swift */,
 				4B0CFDE4C38FA62F2F140398 /* StoreWidgetIntent.swift */,
 				7CC099D0A6BED1B17CBF0104 /* WidgetSnapshotStore.swift */,
 			);
@@ -171,10 +181,12 @@
 				157293A6F7353AC092097D22 /* AuthStore.swift */,
 				B614354EA0481F2F55A9E2AE /* CaptchaSignature.swift */,
 				EAD88C4923C1A0C12B45A0AB /* ErrorAlert.swift */,
+				29D2E4AA10B0A0B9F7AD01A4 /* Info.plist */,
 				76313A70857F5C3E6A960B7F /* LiteU.entitlements */,
 				67933EB9D56C95E9CF9E3937 /* LiteUApp.swift */,
 				9C5956D3DA7E35D9570A84E1 /* LocationProvider.swift */,
 				DED59E758A59301E4589B373 /* LoginView.swift */,
+				5EB205060442A94D0E850AB9 /* OrderActivity.swift */,
 				0DEA15E659FAE4EFF960263F /* OrdersView.swift */,
 				B48114A75FE411E7F87B594E /* PrivacyInfo.xcprivacy */,
 				DA77C5CD974523B1FF07C67C /* RootView.swift */,
@@ -353,6 +365,8 @@
 			files = (
 				B68919B794F82AC8E5DC8527 /* AppGroup.swift in Sources */,
 				C2C8D492F48D81199591E6DA /* Models.swift in Sources */,
+				F5259A802DC0FCDF3A365F77 /* OrderActivityAttributes.swift in Sources */,
+				28955A08547AC5C948CDDBEE /* OrderActivityWidget.swift in Sources */,
 				6470E867D82542F2C3BA6DF8 /* StatusWidget.swift in Sources */,
 				E858B16F2C07A693C1AF0F3C /* StoreWidgetIntent.swift in Sources */,
 				D79309A3BC278E58331BF020 /* WidgetSnapshotStore.swift in Sources */,
@@ -371,6 +385,8 @@
 				ECDD0850EE576E9AA643C50F /* LocationProvider.swift in Sources */,
 				191484ED814845D66C18FDA3 /* LoginView.swift in Sources */,
 				5FDDDBCF74E339EFA3B70C1B /* Models.swift in Sources */,
+				2BEB84886F3C15E894949380 /* OrderActivity.swift in Sources */,
+				912ECA0A2773678C2B5BD62D /* OrderActivityAttributes.swift in Sources */,
 				4448439D035A8BF88A731D10 /* OrdersView.swift in Sources */,
 				B0283FD67647729DF2354E53 /* RootView.swift in Sources */,
 				FD83000D5E7D94B6992D34ED /* StatusView.swift in Sources */,
@@ -409,8 +425,10 @@
 				CODE_SIGN_ENTITLEMENTS = Sources/App/LiteU.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Sources/App/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = LiteU;
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "用于查找附近洗衣房";
+				INFOPLIST_KEY_NSSupportsLiveActivities = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = UIInterfaceOrientationPortrait;
@@ -616,8 +634,10 @@
 				CODE_SIGN_ENTITLEMENTS = Sources/App/LiteU.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Sources/App/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = LiteU;
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "用于查找附近洗衣房";
+				INFOPLIST_KEY_NSSupportsLiveActivities = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = UIInterfaceOrientationPortrait;

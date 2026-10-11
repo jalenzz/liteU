@@ -6,6 +6,7 @@ import WidgetKit
 struct LiteUWidgetBundle: WidgetBundle {
     var body: some Widget {
         StatusWidget()
+        OrderActivityWidget()
     }
 }
 

@@ -5,6 +5,7 @@ struct RootView: View {
     @Environment(AuthStore.self) private var auth
     @Environment(StoreSelectionStore.self) private var selection
     @Environment(OrderStore.self) private var orderStore
+    @Environment(\.scenePhase) private var scenePhase
 
     var body: some View {
         Group {
@@ -30,11 +31,22 @@ struct RootView: View {
                 }
             }
         }
+        // 锁屏时被后台刷新拉起的进程读不到钥匙串，解锁回到前台再读一次。
+        .onChange(of: scenePhase) { _, phase in
+            if phase == .active && auth.token == nil {
+                auth.load()
+            }
+        }
     }
 }
 
 private struct MainTabView: View {
+    private static let refreshInterval: Duration = .seconds(60)
+
+    @Environment(AuthStore.self) private var auth
     @Environment(OrderStore.self) private var orderStore
+    @Environment(\.ujingClient) private var client
+    @Environment(\.scenePhase) private var scenePhase
 
     var body: some View {
         TabView {
@@ -58,6 +70,12 @@ private struct MainTabView: View {
             }
             .tabItem {
                 Label("设置", systemImage: "gearshape")
+            }
+        }
+        .task(id: scenePhase == .active) {
+            guard scenePhase == .active else { return }
+            while (try? await Task.sleep(for: Self.refreshInterval)) != nil {
+                _ = await orderStore.refreshRunning(client: client, auth: auth)
             }
         }
     }

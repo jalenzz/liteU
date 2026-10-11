@@ -1,6 +1,6 @@
 import Foundation
 
-enum MachineKind: String, CaseIterable, Sendable {
+enum MachineKind: String, CaseIterable, Codable, Hashable, Sendable {
     case washer, dryer, shoe
 
     init(typeName: String) {

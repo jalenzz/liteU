@@ -26,12 +26,25 @@ final class OrderStore {
         } catch {
             return auth.message(for: error)
         }
+        await OrderActivity.sync(running)
         await syncReminders()
         return nil
     }
 
+    /// 钥匙串仅解锁时可读，锁屏时被系统拉起读不到 token，跳过本次。
+    func refreshInBackground(auth: AuthStore) async {
+        if auth.token == nil {
+            auth.load()
+        }
+        if auth.token != nil {
+            _ = await refreshRunning(client: .live(), auth: auth)
+        }
+        OrderActivity.scheduleRefresh()
+    }
+
     func reset() async {
         running = []
+        await OrderActivity.sync(running)
         await syncReminders()
     }
 

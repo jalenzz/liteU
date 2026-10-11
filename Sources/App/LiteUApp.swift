@@ -19,6 +19,9 @@ struct LiteUApp: App {
                 .environment(selection)
                 .environment(orderStore)
         }
+        .backgroundTask(.appRefresh(OrderActivity.refreshTaskID)) { [auth, orderStore] in
+            await orderStore.refreshInBackground(auth: auth)
+        }
     }
 }
 
